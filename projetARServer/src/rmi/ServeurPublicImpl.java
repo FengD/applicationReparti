@@ -79,5 +79,4 @@ public class ServeurPublicImpl extends UnicastRemoteObject implements ServeurPub
 		if(cas.contains(ca))
 			cas.remove(ca);
 	}
-
 }
