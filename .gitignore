@@ -1,6 +1,8 @@
 projetARClient/.classpath
 projetARClient/.settings/*
 projetARClient/.project
+projetARClient/bin/*
 projetARServer/.classpath
 projetARServer/.settings/*
 projetARServer/.project
+projetARServer/bin/*

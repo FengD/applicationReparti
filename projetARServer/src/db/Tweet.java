@@ -1,5 +1,69 @@
 package db;
 
-public class Tweet {
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+public class Tweet implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	String message;
+	List<String> photos;
+	List<Topic> topics;
+	List<User> mentionUsers;
+	
+	public Tweet(String message){
+		this.message = message;
+		photos = new ArrayList<>();
+		topics = new ArrayList<>();
+		mentionUsers = new ArrayList<>();
+	}
+	
+	//message get set
+	public String getMessage(){
+		return this.message;
+	}
+	
+	public void setMessage(String message){
+		this.message = message;
+	}
+	
+	//photo add delete getAll
+	public boolean addPhoto(String photo){
+		return this.photos.add(photo);
+	}
+	
+	public boolean deletePhoto(String photo){
+		return this.photos.remove(photo);
+	}
+	
+	public List<String> getAllPhotos(){
+		return this.photos;
+	}
+	
+	//topic add delete getAll
+	public boolean addTopic(Topic topic){
+		return this.topics.add(topic);
+	}
+	
+	public boolean deleteTopic(Topic topic){
+		return this.topics.remove(topic);
+	}
+	
+	public List<Topic> getAllTopics(){
+		return this.topics;
+	}
+	
+	//mention user add delete getAll
+	public boolean addMentionUser(User mentionUser){
+		return this.mentionUsers.add(mentionUser);
+	}
+	
+	public boolean deleteMentionUser(User mentionUser){
+		return this.mentionUsers.remove(mentionUser);
+	}
+	
+	public List<User> getAllMentionUsers(){
+		return this.mentionUsers;
+	}
 }
