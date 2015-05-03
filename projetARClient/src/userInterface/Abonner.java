@@ -71,18 +71,15 @@ public class Abonner extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				if(name.equals("cancel"))
-				{
+				if (name.equals("cancel")) {
 					txt_nom.setText("");
 				}
-					
-				
+
 				if (name.equals("abonner")) {
 					try {
-                       
+
 						String nom = txt_nom.getText();
-						if(mw.getC().getUserName().equals(nom))
-						{
+						if (mw.getC().getUserName().equals(nom)) {
 							JOptionPane.showMessageDialog(null,
 									"vous ne pouvez pas ajouter vous même");
 							return;
@@ -90,10 +87,9 @@ public class Abonner extends JFrame {
 						if (c.getService().abonner(txt_nom.getText())) {
 							dispose();
 							mw.setEnabled(true);
-						} 
-						else {
+						} else {
 							JOptionPane.showMessageDialog(null,
-				     			"ce client ne exist pas");
+									"ce client ne exist pas");
 						}
 
 					} catch (RemoteException e) {

@@ -19,8 +19,8 @@ import javax.swing.JPanel;
 import rmi.Client;
 import rmi.Tweeter;
 
-public class Topic extends JFrame implements ItemListener{
-    
+public class Topic extends JFrame implements ItemListener {
+
 	/**
 	 * 
 	 */
@@ -29,23 +29,23 @@ public class Topic extends JFrame implements ItemListener{
 	private String topicSelected;
 	private JPanel panel;
 	private Client client;
-	
+
 	public Topic(final Client c) throws RemoteException {
 		this.client = c;
 		setTitle("bienvenu");
 		setSize(400, 400);
 		// TODO Auto-generated constructor stub
-		panel = new JPanel(new GridLayout(0,1));
-		this.getContentPane().add(panel,BorderLayout.CENTER);
-		
-		topicSelected="";
+		panel = new JPanel(new GridLayout(0, 1));
+		this.getContentPane().add(panel, BorderLayout.CENTER);
+
+		topicSelected = "";
 		comboBox = new JComboBox<Object>();
 		comboBox.addItemListener(this);
-		List<String> topics =c.getService().listerTopic();
+		List<String> topics = c.getService().listerTopic();
 		refreshTopics(topics);
-		
-		this.getContentPane().add(comboBox,BorderLayout.NORTH);
-		
+
+		this.getContentPane().add(comboBox, BorderLayout.NORTH);
+
 		addWindowListener(new WindowAdapter() {
 
 			public void windowClosing(WindowEvent e) {
@@ -65,49 +65,48 @@ public class Topic extends JFrame implements ItemListener{
 
 	public void refreshFollows(Stack<Tweeter> listerFollows) {
 		// TODO Auto-generated method stub
-		    panel.removeAll();
-		    for(int i =listerFollows.size()-1;i>=0;i--)
-		    {
-		    JLabel tw_label = new JLabel(listerFollows.get(i).getEditer()+": "+listerFollows.get(i).getContenu()+"  id: "+ listerFollows.get(i).getId());
-		   // tw_label.setSize(80, 300);
-		    panel.add(tw_label);
-		    }
-		    
-		    panel.repaint();
-		    this.validate();
+		panel.removeAll();
+		for (int i = listerFollows.size() - 1; i >= 0; i--) {
+			JLabel tw_label = new JLabel(listerFollows.get(i).getEditer()
+					+ ": " + listerFollows.get(i).getContenu() + "  id: "
+					+ listerFollows.get(i).getId());
+			// tw_label.setSize(80, 300);
+			panel.add(tw_label);
+		}
+
+		panel.repaint();
+		this.validate();
 	}
 
 	public void refreshTopics(List<String> listerTopic) {
 		// TODO Auto-generated method stub
 		comboBox.removeAllItems();
-	 for(int i =0;i< listerTopic.size();i++)
-	 {
-		 comboBox.addItem(listerTopic.get(i));
-	 }
-	 
-	 comboBox.repaint();
-	 this.validate();
-	 comboBox.setSelectedItem(topicSelected);
+		for (int i = 0; i < listerTopic.size(); i++) {
+			comboBox.addItem(listerTopic.get(i));
+		}
+
+		comboBox.repaint();
+		this.validate();
+		comboBox.setSelectedItem(topicSelected);
 	}
 
 	@Override
 	public void itemStateChanged(ItemEvent arg0) {
 		// TODO Auto-generated method stub
-		if(arg0.getStateChange() == ItemEvent.SELECTED)
-        {
-			topicSelected=(String)comboBox.getSelectedItem();
-                  if(!topicSelected.equals(""))
-                  {
-                     
-                      try {
-						refreshFollows(client.getService().listerFollows(topicSelected));
-					} catch (RemoteException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-                	
-                  }
-        }
+		if (arg0.getStateChange() == ItemEvent.SELECTED) {
+			topicSelected = (String) comboBox.getSelectedItem();
+			if (!topicSelected.equals("")) {
+
+				try {
+					refreshFollows(client.getService().listerFollows(
+							topicSelected));
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+		}
 	}
 
 }

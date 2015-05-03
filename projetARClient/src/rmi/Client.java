@@ -96,7 +96,7 @@ public class Client extends UnicastRemoteObject implements ClientActive {
 
 	@Override
 	public void refreshList() throws RemoteException {
-        
+
 		this.mw.refresh(getService().listerAbonnement());
 
 	}
@@ -124,14 +124,12 @@ public class Client extends UnicastRemoteObject implements ClientActive {
 	@Override
 	public void refreshTopics() throws RemoteException {
 		// TODO Auto-generated method stub
-		if(topic!=null)
-		{
+		if (topic != null) {
 			String sub = topic.topicSelected();
-			if(!sub.equals(""))
-			topic.refreshFollows(getService().listerFollows(sub));
+			if (!sub.equals(""))
+				topic.refreshFollows(getService().listerFollows(sub));
 			topic.refreshTopics(getService().listerTopic());
 		}
 	}
-
 
 }
