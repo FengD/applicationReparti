@@ -33,6 +33,24 @@ public class Database {
 		this.users.put(user.getName(), user);
 	}
 	
+	/**
+	 * Check if the user is already sign up
+	 * @param userName
+	 * @return is Exist or not
+	 */
+	public boolean isExistUser(String userName){
+		return this.users.containsKey(userName);
+	}
+	
+	/**
+	 * get user in db by name
+	 * @param name
+	 * @return user
+	 */
+	public User getUserByName(String name){
+		return this.users.get(name);
+	}
+	
 	//tweet add delete
 	public void addTweet(Tweet tweet){
 		this.tweets.add(tweet);

@@ -4,22 +4,41 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
+<<<<<<< HEAD
 public class WebServiceImpl extends UnicastRemoteObject implements WebService {
+=======
+import db.Database;
+import db.User;
+>>>>>>> 8fd9dda931da77e7a2f725957ba816383922170a
 
-	protected WebServiceImpl() throws RemoteException {
+public class WebServiceImpl extends UnicastRemoteObject implements WebService {
+	
+	private static final long serialVersionUID = 1L;
+	Database db;
+	
+
+	public WebServiceImpl() throws RemoteException {
 		super();
-		// TODO Auto-generated constructor stub
+		db = Database.getInstance();
+	}
+
+	
+	@Override
+	public boolean register(String name, String pwd) throws RemoteException {
+		if (db.isExistUser(name)) {
+			return false;
+		}
+		db.signUpUser(new User(name, pwd));
+		return true;
 	}
 
 	@Override
-	public boolean register() throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean connect() throws RemoteException {
-		// TODO Auto-generated method stub
+	public boolean connect(String name, String pwd) throws RemoteException {
+		if (db.isExistUser(name)) {
+			if (db.getUserByName(name).checkPwd(pwd)) {
+				return true;
+			}
+		}
 		return false;
 	}
 

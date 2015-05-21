@@ -1,4 +1,4 @@
-package webservice;
+package stub;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
