@@ -1,4 +1,4 @@
-package webservice;
+package controller;
 import java.util.Hashtable;
 
 import javax.jms.*;
@@ -18,7 +18,7 @@ public class Pub {
 	
 	static void setup(String topicName){
 		try {
-        	Hashtable properties = new Hashtable();
+        	Hashtable<String, String> properties = new Hashtable<String, String>();
         	properties.put(Context.INITIAL_CONTEXT_FACTORY, 
         	    "org.apache.activemq.jndi.ActiveMQInitialContextFactory");
         	properties.put(Context.PROVIDER_URL, "tcp://localhost:61616");

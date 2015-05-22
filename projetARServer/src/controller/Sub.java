@@ -1,4 +1,4 @@
-package webservice;
+package controller;
 import java.util.Hashtable;
 
 import javax.jms.JMSException;
@@ -32,7 +32,7 @@ public class Sub implements javax.jms.MessageListener {
 	
 	void setup(String topicName){
 		try {
-        	Hashtable properties = new Hashtable();
+        	Hashtable<String, String> properties = new Hashtable<String, String>();
         	properties.put(Context.INITIAL_CONTEXT_FACTORY, 
         	    "org.apache.activemq.jndi.ActiveMQInitialContextFactory");
         	properties.put(Context.PROVIDER_URL, "tcp://localhost:61616");
@@ -43,7 +43,7 @@ public class Sub implements javax.jms.MessageListener {
 			//should set a clientID for durable subscriber
 			topicConnection.setClientID(subName);
 		
-			topic = (Topic) context.lookup("dynamicTopics/polytech");//""
+			topic = (Topic) context.lookup("dynamicTopics/"+topicName);//""
 //			topic = topicSession.createTopic("polytech");
 			
 			topicSession = topicConnection.createTopicSession(false,Session.AUTO_ACKNOWLEDGE);
@@ -60,8 +60,6 @@ public class Sub implements javax.jms.MessageListener {
 			 setup(topicName);
 			 topicConnection.start();
 	
-			 /********************no durable subscriber can receive message*******************************/
-//			 topicSubscriber = topicSession.createSubscriber(topic);
 			 topicSubscriber = topicSession.createDurableSubscriber(topic,subName);
 //			 topicSubscriber.setMessageListener(this);
 
@@ -86,12 +84,19 @@ public class Sub implements javax.jms.MessageListener {
 		}
 	}
 	
+	public void close(){
+		try {
+			topicSession.close();
+			topicConnection.close();
+		} catch (JMSException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	@Override
 	public void onMessage(Message message) {
 		System.out.println("on message");
 		System.out.print("Recu un message du topic: "+message);
-//			System.out.println(((MapMessage)message).getString("num"));
 	}
 	
 	public static void main(String[] args) {
