@@ -46,34 +46,30 @@ public class Pub {
 			 topicPublisher.setDeliveryMode(DeliveryMode.PERSISTENT);
 			 topicConnection.start();
 			 //send messagge
-			 publish();
-			 System.out.println("Close session");
-			 topicSession.close();
-			 System.out.println("Close connection");
-			 topicConnection.close();
+			 publish(new Tweet("small bird king"));
+			 close();
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}
 
 	}
 	
-	static void publish() {
-//        TextMessage tm;
+	static void publish(Tweet tweet) {
 		ObjectMessage message;
 		try {
-			Tweet tweet = new Tweet("small bird king");
 			message = topicSession.createObjectMessage(tweet);
-//			message.setObjectProperty("tweet", );
 			topicPublisher.publish(message);
 			System.out.println(tweet.getMessage());
-//			tm = topicSession.createTextMessage("A text msg, now="+System.currentTimeMillis());
-//	        topicPublisher.publish(tm);
-//	        System.out.println("sendAsync, sent text=" +  tm.getText());
-//	        topicPublisher.close();
-//	        System.out.println("End sendAsync");
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	static void close() throws JMSException{
+		 System.out.println("Close session");
+		 topicSession.close();
+		 System.out.println("Close connection");
+		 topicConnection.close();
 	}
 	
 	public static void main(String[] args) {

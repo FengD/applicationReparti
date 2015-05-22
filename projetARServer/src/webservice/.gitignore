@@ -7,3 +7,5 @@
 /DurableTopicRecvClient.class
 /E.class
 /TopicSendClient.class
+/Service.class
+/ServiceImpl.class

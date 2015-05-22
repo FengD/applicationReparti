@@ -28,22 +28,22 @@ public class WebServiceImpl extends UnicastRemoteObject implements WebService {
 		return true;
 	}
 
-	@Override
-	public boolean connect(String name, String pwd) throws RemoteException {
-		if (db.isExistUser(name)) {
-			if (db.getUserByName(name).checkPwd(pwd)) {
-				return true;
-			}
-		}
-		return false;
-	}
+//	@Override
+//	public boolean connect(String name, String pwd) throws RemoteException {
+//		if (db.isExistUser(name)) {
+//			if (db.getUserByName(name).checkPwd(pwd)) {
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
 
 	@Override
 	public boolean disconnect() throws RemoteException {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
+/**
 	@Override
 	public boolean addFollowing() throws RemoteException {
 		// TODO Auto-generated method stub
@@ -85,5 +85,12 @@ public class WebServiceImpl extends UnicastRemoteObject implements WebService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+**/
 
+
+	@Override
+	public Service login(String name, String pwd) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
