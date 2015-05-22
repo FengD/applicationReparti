@@ -4,12 +4,8 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
-<<<<<<< HEAD
-public class WebServiceImpl extends UnicastRemoteObject implements WebService {
-=======
 import db.Database;
 import db.User;
->>>>>>> 8fd9dda931da77e7a2f725957ba816383922170a
 
 public class WebServiceImpl extends UnicastRemoteObject implements WebService {
 	
