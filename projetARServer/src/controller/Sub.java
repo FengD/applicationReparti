@@ -42,7 +42,14 @@ public class Sub implements javax.jms.MessageListener {
 			topicConnectionFactory = (TopicConnectionFactory)context.lookup(topicConnectionFactoryName);
 			topicConnection = topicConnectionFactory.createTopicConnection("admin","admin");
 			//should set a clientID for durable subscriber
+<<<<<<< HEAD:projetARServer/src/controller/Sub.java
 			topicConnection.setClientID(subName);	
+=======
+			topicConnection.setClientID(subName);
+		
+			topic = (Topic) context.lookup("dynamicTopics/"+topicName);//""
+//			topic = topicSession.createTopic("polytech");
+>>>>>>> origin/master:projetARServer/src/controller/Sub.java
 			
 			
 			topic = (Topic) context.lookup("dynamicTopics/polytechMac");
