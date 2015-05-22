@@ -2,30 +2,26 @@ package webservice;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
 
-import db.Database;
-import db.User;
+import controller.UserController;
 
 public class WebServiceImpl extends UnicastRemoteObject implements WebService {
 	
 	private static final long serialVersionUID = 1L;
-	Database db;
+	private Service service;
+	private UserController controller;
 	
-
 	public WebServiceImpl() throws RemoteException {
 		super();
-		db = Database.getInstance();
+		service = new ServiceImpl();
+		controller = new UserController();
 	}
 
 	
 	@Override
 	public boolean register(String name, String pwd) throws RemoteException {
-		if (db.isExistUser(name)) {
-			return false;
-		}
-		db.signUpUser(new User(name, pwd));
-		return true;
+		System.out.println("register name: "+name+" pwd: "+pwd);
+		return controller.createNewUser(name, pwd);
 	}
 
 //	@Override
@@ -90,7 +86,11 @@ public class WebServiceImpl extends UnicastRemoteObject implements WebService {
 
 	@Override
 	public Service login(String name, String pwd) throws RemoteException {
-		// TODO Auto-generated method stub
+		System.out.println("login name: "+name+" pwd: "+pwd);
+		if (controller.login(name, pwd)) {
+			System.out.println("login OK");
+			return service;
+		}
 		return null;
 	}
 }
