@@ -2,3 +2,8 @@
 /WebServiceImpl.class
 /Server.class
 /Pub.class
+/Sub.class
+/Test.class
+/DurableTopicRecvClient.class
+/E.class
+/TopicSendClient.class
