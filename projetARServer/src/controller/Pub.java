@@ -6,6 +6,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.naming.Context;
 
+import db.Tweet;
+
 public class Pub {
 	static private Topic topic;
 	static private TopicPublisher topicPublisher;
@@ -28,7 +30,7 @@ public class Pub {
 			topicConnection = topicConnectionFactory.createTopicConnection();
 			topicSession = topicConnection.createTopicSession(false,Session.AUTO_ACKNOWLEDGE);
 
-			topic = (Topic) context.lookup("dynamicTopics/polytechMac");
+			topic = (Topic) context.lookup("dynamicTopics/"+topicName);
 //			topic = topicSession.createTopic(topicName);
 		} catch (JMSException e) {
 			e.printStackTrace();
@@ -56,19 +58,25 @@ public class Pub {
 	}
 	
 	static void publish() {
-        TextMessage tm;
+//        TextMessage tm;
+		ObjectMessage message;
 		try {
-			tm = topicSession.createTextMessage("A text msg, now="+System.currentTimeMillis());
-	        topicPublisher.publish(tm);
-	        System.out.println("sendAsync, sent text=" +  tm.getText());
-	        topicPublisher.close();
-	        System.out.println("End sendAsync");
+			Tweet tweet = new Tweet("small bird king");
+			message = topicSession.createObjectMessage(tweet);
+//			message.setObjectProperty("tweet", );
+			topicPublisher.publish(message);
+			System.out.println(tweet.getMessage());
+//			tm = topicSession.createTextMessage("A text msg, now="+System.currentTimeMillis());
+//	        topicPublisher.publish(tm);
+//	        System.out.println("sendAsync, sent text=" +  tm.getText());
+//	        topicPublisher.close();
+//	        System.out.println("End sendAsync");
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public static void main(String[] args) {
-		Pub.setupPublisher("polytech");
+		Pub.setupPublisher("polytechMac");
 	}
 }

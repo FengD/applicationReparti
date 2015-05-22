@@ -73,6 +73,6 @@ public class UserController {
 		UserController userController = new UserController();
 		userController.createNewUser("shi", "shi");
 		userController.login("shi", "shi");
-		userController.addFollowing(new Topic("polytech"));
+		userController.addFollowing(new Topic("polytechMac"));
 	}
 }

@@ -3,6 +3,7 @@ import java.util.Hashtable;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
+import javax.jms.ObjectMessage;
 import javax.jms.Session;
 import javax.jms.Topic;
 import javax.jms.TopicConnection;
@@ -14,6 +15,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import com.sun.xml.internal.ws.Closeable;
+
+import db.Tweet;
 
 public class Sub implements javax.jms.MessageListener {
 	
@@ -42,14 +45,10 @@ public class Sub implements javax.jms.MessageListener {
 			topicConnectionFactory = (TopicConnectionFactory)context.lookup(topicConnectionFactoryName);
 			topicConnection = topicConnectionFactory.createTopicConnection("admin","admin");
 			//should set a clientID for durable subscriber
-<<<<<<< HEAD:projetARServer/src/controller/Sub.java
-			topicConnection.setClientID(subName);	
-=======
 			topicConnection.setClientID(subName);
 		
 			topic = (Topic) context.lookup("dynamicTopics/"+topicName);//""
 //			topic = topicSession.createTopic("polytech");
->>>>>>> origin/master:projetARServer/src/controller/Sub.java
 			
 			
 			topic = (Topic) context.lookup("dynamicTopics/polytechMac");
@@ -104,11 +103,21 @@ public class Sub implements javax.jms.MessageListener {
 	
 	@Override
 	public void onMessage(Message message) {
-		System.out.print("Recu un message du topic: "+message);
+		 if (message instanceof ObjectMessage) {
+			 try {
+				 ObjectMessage objectMessage = (ObjectMessage)message;
+				 Tweet tweet = (Tweet) objectMessage.getObject();
+				 System.out.println("recept tweet: "+tweet.getMessage());
+			} catch (JMSException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		 }
+		
 	}
 	
 	public static void main(String[] args) {
-		new Sub("shiMac", "polytech");	
+		new Sub("shiMac", "polytechMac");	
 	}
 
 }
