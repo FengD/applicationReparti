@@ -1,9 +1,9 @@
-package webservice;
+package controller;
 import java.util.Hashtable;
 
 import javax.jms.JMSException;
-import javax.jms.MapMessage;
 import javax.jms.Message;
+import javax.jms.ObjectMessage;
 import javax.jms.Session;
 import javax.jms.Topic;
 import javax.jms.TopicConnection;
@@ -13,6 +13,10 @@ import javax.jms.TopicSubscriber;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+
+import com.sun.xml.internal.ws.Closeable;
+
+import db.Tweet;
 
 public class Sub implements javax.jms.MessageListener {
 	
@@ -32,22 +36,26 @@ public class Sub implements javax.jms.MessageListener {
 	
 	void setup(String topicName){
 		try {
-        	Hashtable properties = new Hashtable();
+        	Hashtable<String, String> properties = new Hashtable<String, String>();
         	properties.put(Context.INITIAL_CONTEXT_FACTORY, 
         	    "org.apache.activemq.jndi.ActiveMQInitialContextFactory");
         	properties.put(Context.PROVIDER_URL, "tcp://localhost:61616");
 			context = new InitialContext(properties);
 			
 			topicConnectionFactory = (TopicConnectionFactory)context.lookup(topicConnectionFactoryName);
-			topicConnection = topicConnectionFactory.createTopicConnection("user","pwd");
+			topicConnection = topicConnectionFactory.createTopicConnection("admin","admin");
 			//should set a clientID for durable subscriber
 			topicConnection.setClientID(subName);
 		
-			topic = (Topic) context.lookup("dynamicTopics/polytech");//""
+			topic = (Topic) context.lookup("dynamicTopics/"+topicName);//""
 //			topic = topicSession.createTopic("polytech");
 			
-			topicSession = topicConnection.createTopicSession(false,Session.AUTO_ACKNOWLEDGE);
 			
+			topic = (Topic) context.lookup("dynamicTopics/polytechMac");
+			System.out.println("topic name:"+topicName);
+//			topic = topicSession.createTopic(topicName);
+			
+			topicSession = topicConnection.createTopicSession(false,Session.AUTO_ACKNOWLEDGE);
 		} catch (JMSException e) {
 			e.printStackTrace();
 		} catch (NamingException e) {
@@ -60,8 +68,6 @@ public class Sub implements javax.jms.MessageListener {
 			 setup(topicName);
 			 topicConnection.start();
 	
-			 /********************no durable subscriber can receive message*******************************/
-//			 topicSubscriber = topicSession.createSubscriber(topic);
 			 topicSubscriber = topicSession.createDurableSubscriber(topic,subName);
 //			 topicSubscriber.setMessageListener(this);
 
@@ -69,10 +75,7 @@ public class Sub implements javax.jms.MessageListener {
 			 
 		     while (true){
 		    	System.out.println("in while");
-		    	MapMessage m= (MapMessage)topicSubscriber.receive(10000);
-		    	
-		    	
-		    	
+		    	Message m= topicSubscriber.receive(10000);
 		        if (m == null) {
 					System.out.println("No more messages");
 					break;
@@ -89,21 +92,32 @@ public class Sub implements javax.jms.MessageListener {
 		}
 	}
 	
-	
-	@Override
-	public void onMessage(Message message) {
-		System.out.println("on message");
+	public void close(){
 		try {
-			System.out.print("Recu un message du topic: "+((MapMessage)message).getString("nom"));
-			System.out.println(((MapMessage)message).getString("num"));
+			topicSession.close();
+			topicConnection.close();
 		} catch (JMSException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
+	@Override
+	public void onMessage(Message message) {
+		 if (message instanceof ObjectMessage) {
+			 try {
+				 ObjectMessage objectMessage = (ObjectMessage)message;
+				 Tweet tweet = (Tweet) objectMessage.getObject();
+				 System.out.println("recept tweet: "+tweet.getMessage());
+			} catch (JMSException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		 }
+		
+	}
+	
 	public static void main(String[] args) {
-		new Sub("shi", "polytech");	
+		new Sub("shiMac", "polytechMac");	
 	}
 
 }

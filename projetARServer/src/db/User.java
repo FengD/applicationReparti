@@ -2,25 +2,23 @@ package db;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Stack;
 import java.util.List;
 
-public class User implements Serializable{
+public class User extends Topic implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	String name;
 	String pwd;
 	String profile;
-	List<User> following;
+	List<Topic> following;
 	List<User> followers;
-	Stack<Tweet> tweets;
 	
 	public User(String name, String pwd){
+		super(name);
 		this.name = name;
 		this.pwd = pwd;
 		followers = new ArrayList<>();
 		following = new ArrayList<>();
-		tweets = new Stack<>();
 	}
 	
 	public User(String name, String pwd, String profile){
@@ -61,15 +59,15 @@ public class User implements Serializable{
 	}
 	
 	//following add delete getAll
-	public boolean addFollowing(User following){
+	public boolean addFollowing(Topic following){
 		return this.following.add(following);
 	}
 	
-	public boolean deleteFollowing(User following){
+	public boolean deleteFollowing(Topic following){
 		return this.following.remove(following);
 	}
 	
-	public List<User> getAllFollowing(){
+	public List<Topic> getAllFollowing(){
 		return this.following;
 	}
 	
@@ -86,16 +84,4 @@ public class User implements Serializable{
 		return this.followers;
 	}
 	
-	//tweet add delete getAll
-	public boolean addTweet(Tweet tweet){
-		return this.tweets.add(tweet);
-	}
-	
-	public boolean deleteTweet(Tweet tweet){
-		return this.tweets.remove(tweet);
-	}
-	
-	public Stack<Tweet> getAllTweets(){
-		return this.tweets;
-	}
 }

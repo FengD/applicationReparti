@@ -7,7 +7,9 @@ import java.util.List;
 public class Tweet implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	User owner;
 	String message;
+	
 	List<String> photos;
 	List<Topic> topics;
 	List<User> mentionUsers;
@@ -17,6 +19,15 @@ public class Tweet implements Serializable {
 		photos = new ArrayList<>();
 		topics = new ArrayList<>();
 		mentionUsers = new ArrayList<>();
+	}
+	
+	//get/set owner
+	public void setOwner(User owner){
+		this.owner = owner;
+	}
+	
+	public User getOwner(){
+		return this.owner;
 	}
 	
 	//message get set
