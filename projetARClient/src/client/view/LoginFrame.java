@@ -93,12 +93,6 @@ public class LoginFrame extends TweetsView {
 	}
 
 	@Override
-	public void tweetsChanged(TweetsChangedEvent event) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void display() {
 		frame.setVisible(true);
 

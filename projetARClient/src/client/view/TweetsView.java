@@ -3,7 +3,7 @@ package client.view;
 import client.controller.TweetsController;
 
 
-public abstract class TweetsView implements TweetsChangedListener{
+public abstract class TweetsView {
 	private TweetsController tweetsController = null;
 
 	public final TweetsController getController() {

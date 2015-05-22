@@ -14,8 +14,6 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import com.sun.xml.internal.ws.Closeable;
-
 import db.Tweet;
 
 public class Sub implements javax.jms.MessageListener {

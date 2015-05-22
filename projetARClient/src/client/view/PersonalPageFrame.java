@@ -28,12 +28,6 @@ public class PersonalPageFrame extends TweetsView{
 		frame.add(newsPanel);
 		frame.pack();
 	}
-	
-	@Override
-	public void tweetsChanged(TweetsChangedEvent event) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void display() {

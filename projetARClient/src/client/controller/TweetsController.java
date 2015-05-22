@@ -1,15 +1,22 @@
 package client.controller;
 
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+
+import stub.WebService;
 import client.view.TweetsView;
 
-public class TweetsController {
+public class TweetsController extends UnicastRemoteObject {
+	protected TweetsController() throws RemoteException {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	private TweetsView login;
 	private TweetsView register;
 	private TweetsView personalPage;
 	
-	public TweetsController(){
-		
-	}
+	private WebService webService;
 	
 	public void setLogin(TweetsView login){
 		this.login = login;
@@ -45,6 +52,14 @@ public class TweetsController {
 	
 	public void closePersonalPage(){
 		personalPage.close();
+	}
+	
+	public void setWebservice(WebService webService){
+		this.webService = webService;
+	}
+	
+	public boolean register(String userName, String password) throws RemoteException{
+		return webService.register(userName, password);
 	}
 
 }
