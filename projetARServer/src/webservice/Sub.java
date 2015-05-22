@@ -39,7 +39,7 @@ public class Sub implements javax.jms.MessageListener {
 			context = new InitialContext(properties);
 			
 			topicConnectionFactory = (TopicConnectionFactory)context.lookup(topicConnectionFactoryName);
-			topicConnection = topicConnectionFactory.createTopicConnection("user","pwd");
+			topicConnection = topicConnectionFactory.createTopicConnection("admin","admin");
 			//should set a clientID for durable subscriber
 			topicConnection.setClientID(subName);
 		
@@ -69,10 +69,7 @@ public class Sub implements javax.jms.MessageListener {
 			 
 		     while (true){
 		    	System.out.println("in while");
-		    	MapMessage m= (MapMessage)topicSubscriber.receive(10000);
-		    	
-		    	
-		    	
+		    	Message m= topicSubscriber.receive(10000);
 		        if (m == null) {
 					System.out.println("No more messages");
 					break;
@@ -93,13 +90,8 @@ public class Sub implements javax.jms.MessageListener {
 	@Override
 	public void onMessage(Message message) {
 		System.out.println("on message");
-		try {
-			System.out.print("Recu un message du topic: "+((MapMessage)message).getString("nom"));
-			System.out.println(((MapMessage)message).getString("num"));
-		} catch (JMSException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		System.out.print("Recu un message du topic: "+message);
+//			System.out.println(((MapMessage)message).getString("num"));
 	}
 	
 	public static void main(String[] args) {
