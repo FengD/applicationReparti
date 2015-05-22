@@ -1,9 +1,9 @@
 package webservice;
 
+import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 
-public interface Service {
+public interface Service extends Remote{
 	public boolean addFollowing(String topicName) throws RemoteException;
 	
 //	public boolean deleteFollowing(String topicName) throws RemoteException;
