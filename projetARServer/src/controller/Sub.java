@@ -1,8 +1,7 @@
-package webservice;
+package controller;
 import java.util.Hashtable;
 
 import javax.jms.JMSException;
-import javax.jms.MapMessage;
 import javax.jms.Message;
 import javax.jms.Session;
 import javax.jms.Topic;
@@ -13,6 +12,8 @@ import javax.jms.TopicSubscriber;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+
+import com.sun.xml.internal.ws.Closeable;
 
 public class Sub implements javax.jms.MessageListener {
 	
@@ -32,7 +33,7 @@ public class Sub implements javax.jms.MessageListener {
 	
 	void setup(String topicName){
 		try {
-        	Hashtable properties = new Hashtable();
+        	Hashtable<String, String> properties = new Hashtable<String, String>();
         	properties.put(Context.INITIAL_CONTEXT_FACTORY, 
         	    "org.apache.activemq.jndi.ActiveMQInitialContextFactory");
         	properties.put(Context.PROVIDER_URL, "tcp://localhost:61616");
@@ -41,13 +42,14 @@ public class Sub implements javax.jms.MessageListener {
 			topicConnectionFactory = (TopicConnectionFactory)context.lookup(topicConnectionFactoryName);
 			topicConnection = topicConnectionFactory.createTopicConnection("admin","admin");
 			//should set a clientID for durable subscriber
-			topicConnection.setClientID(subName);
-		
-			topic = (Topic) context.lookup("dynamicTopics/polytech");//""
-//			topic = topicSession.createTopic("polytech");
+			topicConnection.setClientID(subName);	
+			
+			
+			topic = (Topic) context.lookup("dynamicTopics/polytechMac");
+			System.out.println("topic name:"+topicName);
+//			topic = topicSession.createTopic(topicName);
 			
 			topicSession = topicConnection.createTopicSession(false,Session.AUTO_ACKNOWLEDGE);
-			
 		} catch (JMSException e) {
 			e.printStackTrace();
 		} catch (NamingException e) {
@@ -60,8 +62,6 @@ public class Sub implements javax.jms.MessageListener {
 			 setup(topicName);
 			 topicConnection.start();
 	
-			 /********************no durable subscriber can receive message*******************************/
-//			 topicSubscriber = topicSession.createSubscriber(topic);
 			 topicSubscriber = topicSession.createDurableSubscriber(topic,subName);
 //			 topicSubscriber.setMessageListener(this);
 
@@ -86,16 +86,22 @@ public class Sub implements javax.jms.MessageListener {
 		}
 	}
 	
+	public void close(){
+		try {
+			topicSession.close();
+			topicConnection.close();
+		} catch (JMSException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	@Override
 	public void onMessage(Message message) {
-		System.out.println("on message");
 		System.out.print("Recu un message du topic: "+message);
-//			System.out.println(((MapMessage)message).getString("num"));
 	}
 	
 	public static void main(String[] args) {
-		new Sub("shi", "polytech");	
+		new Sub("shiMac", "polytech");	
 	}
 
 }
