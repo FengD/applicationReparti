@@ -78,11 +78,15 @@ public class LoginFrame extends TweetsView {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					if(getController().login(username.getText(), password.getText()) != null){
+					getController().setUserName(username.getText());
+					getController().setPassword(password.getText());
+					System.out.println("hello1");
+					if(getController().login(getController()) != null){
+						System.out.println("hello2");
 						getController().closeLogin();
 						getController().displayPersonalPage();
 					} else {
-						
+						System.out.println("hello3");
 					}
 				} catch (RemoteException e1) {
 					// TODO Auto-generated catch block

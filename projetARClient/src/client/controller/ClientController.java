@@ -18,6 +18,9 @@ public class ClientController extends UnicastRemoteObject implements ClientActio
 	private TweetsView register;
 	private TweetsView personalPage;
 	
+	private String userName;
+	private String passWord;
+	
 	private WebService webService;
 	
 	public void setLogin(TweetsView login){
@@ -64,20 +67,21 @@ public class ClientController extends UnicastRemoteObject implements ClientActio
 		return webService.register(userName, password);
 	}
 	
-	public Service login(String userName, String password) throws RemoteException{
-		return webService.login(userName, password);
+	public Service login(ClientAction clientAction) throws RemoteException{
+		System.out.println(clientAction.getUserName());
+		return webService.login(clientAction);
 	}
 
 	@Override
 	public String getPassword() throws RemoteException {
 		// TODO Auto-generated method stub
-		return null;
+		return this.passWord;
 	}
 
 	@Override
 	public String getUserName() throws RemoteException {
 		// TODO Auto-generated method stub
-		return null;
+		return this.userName;
 	}
 
 	@Override
@@ -102,6 +106,14 @@ public class ClientController extends UnicastRemoteObject implements ClientActio
 	public void refreshTopics() throws RemoteException {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public void setPassword(String password) {
+		this.passWord = password;
 	}
 
 }
