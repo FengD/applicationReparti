@@ -44,14 +44,19 @@ public class UserController {
 	}
 	
 	public boolean deconnecter(String name){
+		System.out.println(name+" deconnecte");
 		user = findUserByName(name);
 		if (user != null) {
 			user.setIsLogin(false);
+			int i = 1;
 			for (Sub sub : user.getSubs()) {
+				System.out.println("deconnecte sub "+i);
 				sub.close();
 			}
+			System.out.println("deconnecte ok");
 			return true;
 		}
+		System.out.println("Cannot find user");
 		return false;
 	}
 	
@@ -66,7 +71,7 @@ public class UserController {
 			List<Topic> topics = user.getAllFollowing();
 			if (topics != null && !topics.isEmpty()) {
 				for (Topic topic : topics) {
-					user.addSub(new Sub(user.getName(), topic.getTopicName(),clientAction));
+					user.addSub(new Sub(user.getName()+topic.getTopicName(), topic.getTopicName(),clientAction));
 				}
 			}
 		}

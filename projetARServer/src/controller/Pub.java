@@ -37,18 +37,18 @@ public class Pub {
 //        	properties.put(Context.PROVIDER_URL, "tcp://"+host+":61616");
 //			context = new InitialContext(properties);
 			
-			System.out.println("start creating factory");
+//			System.out.println("start creating factory");
 //			topicConnectionFactory = (TopicConnectionFactory)context.lookup(topicConnectionFactoryName);
 			topicConnectionFactory = new ActiveMQConnectionFactory("tcp://0.0.0.0:61616");
-			System.out.println("create factory");
+//			System.out.println("create factory");
 			topicConnection = topicConnectionFactory.createTopicConnection();
-			System.out.println("create connection");
+//			System.out.println("create connection");
 			topicSession = topicConnection.createTopicSession(false,Session.AUTO_ACKNOWLEDGE);
-			System.out.println("create session");
+//			System.out.println("create session");
 
 //			topic = (Topic) context.lookup("dynamicTopics/"+topicName);
 			topic = topicSession.createTopic(topicName);
-			System.out.println("create topic");		
+//			System.out.println("create topic");		
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}
@@ -56,14 +56,14 @@ public class Pub {
 	
 	public void setupPublisher(User owner, String topicName, String tweetMessage){	 
 		try {
-			 System.out.println("start setup publisher");
+//			 System.out.println("start setup publisher");
 			 setup(topicName);
-			 System.out.println("end setup");
+//			 System.out.println("end setup");
 			 topicPublisher = topicSession.createPublisher(topic);
-			 System.out.println("create publisher");
+//			 System.out.println("create publisher");
 			 topicPublisher.setDeliveryMode(DeliveryMode.PERSISTENT);
 			 topicConnection.start();
-			 System.out.println("connection start");
+//			 System.out.println("connection start");
 			 //send messagge
 			 Tweet tweet = new Tweet(owner,tweetMessage);
 			 publish(tweet);
@@ -75,7 +75,7 @@ public class Pub {
 	}
 	
 	void publish(Tweet tweet) {
-		System.out.println("publish start");
+//		System.out.println("publish start");
 		ObjectMessage message;
 		try {
 			message = topicSession.createObjectMessage(tweet);

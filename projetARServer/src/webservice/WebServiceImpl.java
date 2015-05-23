@@ -36,8 +36,7 @@ public class WebServiceImpl extends UnicastRemoteObject implements WebService {
 
 	@Override
 	public boolean disconnect(String name) throws RemoteException {
-		
-		return false;
+		return userController.deconnecter(name);
 	}
 /**
 	@Override
