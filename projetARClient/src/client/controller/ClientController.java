@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import webservice.Service;
 import webservice.WebService;
+import client.view.PersonalPageView;
 import client.view.TweetsView;
 
 public class ClientController extends UnicastRemoteObject implements ClientAction{
@@ -16,7 +17,7 @@ public class ClientController extends UnicastRemoteObject implements ClientActio
 
 	private TweetsView login;
 	private TweetsView register;
-	private TweetsView personalPage;
+	private PersonalPageView personalPage;
 	
 	private String userName;
 	private String passWord;
@@ -41,7 +42,7 @@ public class ClientController extends UnicastRemoteObject implements ClientActio
 		this.register = register;
 	}
 	
-	public void setPersonalPage(TweetsView personalPage){
+	public void setPersonalPage(PersonalPageView personalPage){
 		this.personalPage = personalPage;
 	}
 	
@@ -95,7 +96,8 @@ public class ClientController extends UnicastRemoteObject implements ClientActio
 
 	@Override
 	public void newTweets(HashMap<String, String> tweets) throws RemoteException {
-		// TODO Auto-generated method stub
+//		personalPage.setNews(tweets.get("message"));
+		System.out.println(tweets.get("message"));
 		
 	}
 

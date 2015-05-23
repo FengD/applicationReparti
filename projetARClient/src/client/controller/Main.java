@@ -9,6 +9,7 @@ import java.rmi.registry.Registry;
 import webservice.WebService;
 import client.view.LoginFrame;
 import client.view.PersonalPageFrame;
+import client.view.PersonalPageView;
 import client.view.RegisterFrame;
 import client.view.TweetsView;
 
@@ -16,7 +17,7 @@ public class Main {
 	
 	private static TweetsView login;
 	private static TweetsView register;
-	private static TweetsView personalPage;
+	private static PersonalPageView personalPage;
 	
 	private static ClientController controller;
 	

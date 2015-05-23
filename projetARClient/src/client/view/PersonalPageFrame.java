@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 import client.controller.ClientController;
 
 
-public class PersonalPageFrame extends TweetsView{
+public class PersonalPageFrame extends PersonalPageView{
 	
 	private JFrame frame;
 	private NewsPanel newsPanel;
@@ -40,6 +40,11 @@ public class PersonalPageFrame extends TweetsView{
 	@Override
 	public void close() {
 		frame.dispose();
+	}
+
+	@Override
+	public void setNews(String news) {
+		newsPanel.setNewsLabel(news);
 	}
 
 }
