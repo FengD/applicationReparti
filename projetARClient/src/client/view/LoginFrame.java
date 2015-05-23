@@ -4,6 +4,7 @@ import java.awt.Container;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -12,7 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import client.controller.TweetsController;
+import client.controller.ClientController;
 
 public class LoginFrame extends TweetsView {
 
@@ -29,7 +30,7 @@ public class LoginFrame extends TweetsView {
 	private JButton login;
 	private JButton register;
 
-	public LoginFrame(TweetsController tc) {
+	public LoginFrame(ClientController tc) {
 		setController(tc);
 		frame = new JFrame();
 		frame.setTitle("Twitter Login");
@@ -76,8 +77,17 @@ public class LoginFrame extends TweetsView {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				getController().closeLogin();
-				getController().displayPersonalPage();
+				try {
+					if(getController().login(username.getText(), password.getText()) != null){
+						getController().closeLogin();
+						getController().displayPersonalPage();
+					} else {
+						
+					}
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 			
 		});

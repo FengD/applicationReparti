@@ -3,3 +3,9 @@
 /PersonalPageFrame.class
 /RegisterFrame.class
 /UserInfoPanel.class
+/LoginFrame$1.class
+/LoginFrame$2.class
+/RegisterFrame$1.class
+/TweetsChangedEvent.class
+/TweetsChangedListener.class
+/TweetsView.class

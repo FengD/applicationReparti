@@ -1,5 +1,0 @@
- grant codeBase "file:.${/}src${/}stub${/}" {
-  permission java.net.SocketPermission "10.212.115.185:1024-", "connect,resolve,accept"; 
-  permission java.net.SocketPermission "127.0.0.1:8000", "connect,resolve"; 
-  permission java.io.FilePermission "/Users/sth/develope/reseau/RMI/src/td1/facture.txt", "write" ;
-  };

@@ -13,7 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import client.controller.TweetsController;
+import client.controller.ClientController;
 
 public class RegisterFrame extends TweetsView {
 	private JFrame frame;
@@ -28,7 +28,7 @@ public class RegisterFrame extends TweetsView {
 
 	private JButton register;
 
-	public RegisterFrame(TweetsController tc) {
+	public RegisterFrame(ClientController tc) {
 		setController(tc);
 		frame = new JFrame();
 		frame.setTitle("Twitter Register");
@@ -69,7 +69,6 @@ public class RegisterFrame extends TweetsView {
 						getController().closeRegister();
 						getController().displayLogin();
 					} else {
-						
 					}
 				} catch (RemoteException e1) {
 					// TODO Auto-generated catch block

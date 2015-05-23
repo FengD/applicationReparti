@@ -4,7 +4,7 @@ import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
 
-import client.controller.TweetsController;
+import client.controller.ClientController;
 
 
 public class PersonalPageFrame extends TweetsView{
@@ -13,7 +13,7 @@ public class PersonalPageFrame extends TweetsView{
 	private NewsPanel newsPanel;
 	private UserInfoPanel userInfoPanel;
 
-	public PersonalPageFrame(TweetsController tc){
+	public PersonalPageFrame(ClientController tc){
 		frame = new JFrame();
 		setController(tc);
 		frame.setTitle("Hello Page");

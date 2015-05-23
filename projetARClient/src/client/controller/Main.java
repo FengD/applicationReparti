@@ -6,7 +6,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
-import stub.WebService;
+import webservice.WebService;
 import client.view.LoginFrame;
 import client.view.PersonalPageFrame;
 import client.view.RegisterFrame;
@@ -18,12 +18,12 @@ public class Main {
 	private static TweetsView register;
 	private static TweetsView personalPage;
 	
-	private static TweetsController controller;
+	private static ClientController controller;
 	
 	private static WebService webService = null;
 	
 	public static void init() throws MalformedURLException, RemoteException, NotBoundException{
-		controller = new TweetsController();
+		controller = new ClientController();
 		login = new LoginFrame(controller);
 		register = new RegisterFrame(controller);
 		personalPage = new PersonalPageFrame(controller);

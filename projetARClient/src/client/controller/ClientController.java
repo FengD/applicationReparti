@@ -3,11 +3,12 @@ package client.controller;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-import stub.WebService;
+import webservice.Service;
+import webservice.WebService;
 import client.view.TweetsView;
 
-public class TweetsController extends UnicastRemoteObject {
-	protected TweetsController() throws RemoteException {
+public class ClientController extends UnicastRemoteObject implements ClientAction{
+	protected ClientController() throws RemoteException {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -60,6 +61,46 @@ public class TweetsController extends UnicastRemoteObject {
 	
 	public boolean register(String userName, String password) throws RemoteException{
 		return webService.register(userName, password);
+	}
+	
+	public Service login(String userName, String password) throws RemoteException{
+		return webService.login(userName, password);
+	}
+
+	@Override
+	public String getPassword() throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getUserName() throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void refreshList() throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void refreshListTout() throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean isConnecte() throws RemoteException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void refreshTopics() throws RemoteException {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
