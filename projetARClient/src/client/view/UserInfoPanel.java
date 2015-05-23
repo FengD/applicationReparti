@@ -30,7 +30,9 @@ public class UserInfoPanel extends JPanel {
 		this.controller = controller;
 	}
 
-	private UserInfoPanel() {
+	public UserInfoPanel(ClientController controller) {
+		this.controller = controller;
+		System.out.println(controller.getService());
 		buildPanel();
 	}
 
@@ -111,13 +113,6 @@ public class UserInfoPanel extends JPanel {
 		}
 
 		topicP.setLayout(new GridLayout(0, 1));
-	}
-
-	public static UserInfoPanel getUserInfoPanel() {
-		if (single == null) {
-			single = new UserInfoPanel();
-		}
-		return single;
 	}
 	
 	public void setUserInfo(String n){

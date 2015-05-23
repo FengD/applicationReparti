@@ -102,8 +102,7 @@ public class ClientController extends UnicastRemoteObject implements ClientActio
 	@Override
 	public void newTweets(HashMap<String, String> tweets) throws RemoteException {
 		personalPage.setNews(tweets.get("message"));
-		System.out.println(tweets.get("message"));
-		
+		System.out.println(tweets.get("message"));	
 	}
 
 	@Override

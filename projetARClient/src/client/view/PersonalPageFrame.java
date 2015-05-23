@@ -44,8 +44,8 @@ public class PersonalPageFrame extends PersonalPageView {
 	public void buildFrame() {
 		newsPanel = NewsPanel.getNewsPanel();
 		newsPanel.setController(getController());
-		userInfoPanel = UserInfoPanel.getUserInfoPanel();
-		userInfoPanel.setController(getController());
+		userInfoPanel = new UserInfoPanel(getController());
+//		userInfoPanel.setController(getController());
 		frame.add(userInfoPanel, BorderLayout.WEST);
 		frame.add(newsPanel);
 	}
