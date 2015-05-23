@@ -7,4 +7,5 @@
   permission java.security.AllPermission;
   permission java.util.PropertyPermission "slf4.detectLoggerNameMismatch","read";
   permission java.io.FilePermission "/Users/sth/develope/reseau/RMI/src/td1/facture.txt", "write" ;
+  permission java.io.FilePermission "/Users/sth/develope/reseau/apache-activemq-5.11.1/activemq-all-5.11.1.jar","write";
   };

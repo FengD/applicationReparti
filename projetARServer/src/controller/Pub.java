@@ -18,7 +18,7 @@ public class Pub {
 	static TopicConnection topicConnection;
 	static TopicSession topicSession;
 	static String topicConnectionFactoryName = "ConnectionFactory";
-	
+	private static String host="192.168.1.87";
 	
 	static void setup(String topicName){
 		try {
@@ -26,9 +26,10 @@ public class Pub {
         	Hashtable<String, String> properties = new Hashtable<String, String>();
         	properties.put(Context.INITIAL_CONTEXT_FACTORY, 
         	    "org.apache.activemq.jndi.ActiveMQInitialContextFactory");
-        	properties.put(Context.PROVIDER_URL, "tcp://192.168.1.87:61616");
+        	properties.put(Context.PROVIDER_URL, "tcp://"+host+":61616");
 			context = new InitialContext(properties);
 			
+			System.out.println("start creating factory");
 			topicConnectionFactory = (TopicConnectionFactory)context.lookup(topicConnectionFactoryName);
 			System.out.println("create factory");
 			topicConnection = topicConnectionFactory.createTopicConnection();

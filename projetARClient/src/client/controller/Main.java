@@ -21,6 +21,7 @@ public class Main {
 	private static ClientController controller;
 	
 	private static WebService webService = null;
+	private static String host = "localhost";
 	
 	public static void init() throws MalformedURLException, RemoteException, NotBoundException{
 		controller = new ClientController();
@@ -31,9 +32,9 @@ public class Main {
 		controller.setRegister(register);
 		controller.setPersonalPage(personalPage);
 		
-		Registry registry = LocateRegistry.getRegistry("192.168.1.87", 8000); 
+		Registry registry = LocateRegistry.getRegistry(host, 8000); 
 		
-		webService = (WebService) registry.lookup("rmi://192.168.1.87:8000/webService");
+		webService = (WebService) registry.lookup("rmi://"+host+":8000/webService");
 		controller.setWebservice(webService);
 		
 		controller.displayLogin();
