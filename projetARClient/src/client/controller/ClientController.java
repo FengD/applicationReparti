@@ -79,7 +79,12 @@ public class ClientController extends UnicastRemoteObject implements ClientActio
 	}
 	
 	public Service login(ClientAction clientAction) throws RemoteException{
+		personalPage.setUserInfo(clientAction.getUserName());
 		return webService.login(clientAction);
+	}
+	
+	public boolean deconnect(String userName) throws RemoteException{
+		return webService.disconnect(userName);
 	}
 
 	@Override
@@ -96,7 +101,7 @@ public class ClientController extends UnicastRemoteObject implements ClientActio
 
 	@Override
 	public void newTweets(HashMap<String, String> tweets) throws RemoteException {
-//		personalPage.setNews(tweets.get("message"));
+		personalPage.setNews(tweets.get("message"));
 		System.out.println(tweets.get("message"));
 		
 	}

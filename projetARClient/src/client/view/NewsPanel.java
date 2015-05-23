@@ -33,7 +33,7 @@ public class NewsPanel extends JPanel{
 	}
 	
 	public void setNewsLabel(String name){
-		newsLabel.setText(name);
+		newsLabel.setText(newsLabel.getText() + name);
 	}
 	
 	private void buildPanel(){
@@ -41,7 +41,7 @@ public class NewsPanel extends JPanel{
 		tweetButton = new JButton("TWEET");
 		tweetMessage = new JTextField();
 		userName = new JTextField();
-		newsLabel = new JLabel("sdfsfsf");
+		newsLabel = new JLabel();
 		tweetP = new JPanel();
 		newsP = new JPanel();
 		followP = new JPanel();
@@ -95,10 +95,6 @@ public class NewsPanel extends JPanel{
 			}
 			
 		});
-		
-		
-		
-		
 	}
 	
 	public void setController(ClientController controller){

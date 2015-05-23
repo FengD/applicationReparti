@@ -1,7 +1,11 @@
 package client.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -31,7 +35,8 @@ public class UserInfoPanel extends JPanel {
 	}
 
 	private void buildPanel() {
-		userName = new JLabel("SHI Tianhao");
+		userName = new JLabel();
+		userName.setForeground(Color.RED);
 		tweets = new JLabel("TWEETS");
 		following = new JLabel("FOLLOWING");
 		followers = new JLabel("FOLLOWERS");
@@ -78,6 +83,23 @@ public class UserInfoPanel extends JPanel {
 		followersP.setLayout(new GridLayout(0, 1));
 		
 		buttonsP.add(deconnectButton);
+		
+		deconnectButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					if(controller.deconnect(controller.getUserName())){
+						controller.closePersonalPage();
+						controller.displayLogin();
+					}
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+		});
 
 		topics = new JLabel[10];
 		for (int i = 0; i < 10; i++) {
@@ -96,6 +118,10 @@ public class UserInfoPanel extends JPanel {
 			single = new UserInfoPanel();
 		}
 		return single;
+	}
+	
+	public void setUserInfo(String n){
+		userName.setText(n);
 	}
 
 }
