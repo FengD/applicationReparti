@@ -14,7 +14,7 @@ public class Tweet implements Serializable {
 	List<Topic> topics;
 	List<User> mentionUsers;
 	
-	public Tweet(String message){
+	public Tweet(User owner, String message){
 		this.message = message;
 		photos = new ArrayList<>();
 		topics = new ArrayList<>();
@@ -28,6 +28,10 @@ public class Tweet implements Serializable {
 	
 	public User getOwner(){
 		return this.owner;
+	}
+	
+	public String getOwnerName(){
+		return this.owner.getName();
 	}
 	
 	//message get set

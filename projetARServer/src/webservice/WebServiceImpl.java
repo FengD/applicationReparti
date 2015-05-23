@@ -3,25 +3,25 @@ package webservice;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
+import client.controller.ClientAction;
 import controller.UserController;
 
 public class WebServiceImpl extends UnicastRemoteObject implements WebService {
 	
 	private static final long serialVersionUID = 1L;
 	private Service service;
-	private UserController controller;
+	private UserController userController;
 	
 	public WebServiceImpl() throws RemoteException {
 		super();
-		service = new ServiceImpl();
-		controller = new UserController();
+		userController = new UserController();
 	}
 
 	
 	@Override
 	public boolean register(String name, String pwd) throws RemoteException {
 		System.out.println("register name: "+name+" pwd: "+pwd);
-		return controller.createNewUser(name, pwd);
+		return userController.createNewUser(name, pwd);
 	}
 
 //	@Override
@@ -85,10 +85,13 @@ public class WebServiceImpl extends UnicastRemoteObject implements WebService {
 
 
 	@Override
-	public Service login(String name, String pwd) throws RemoteException {
-		System.out.println("login name: "+name+" pwd: "+pwd);
-		if (controller.login(name, pwd)) {
+	public Service login(ClientAction clientAction) throws RemoteException {
+		String name = clientAction.getUserName();
+		String pwd = clientAction.getPassword();
+		System.out.println("login name: "+name+" pwd: "+ pwd);
+		if (userController.login(clientAction)) {
 			System.out.println("login OK");
+			service = new ServiceImpl(userController);
 			return service;
 		}
 		return null;

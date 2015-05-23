@@ -1,4 +1,6 @@
 package controller;
+import java.rmi.RemoteException;
+import java.util.HashMap;
 import java.util.Hashtable;
 
 import javax.jms.JMSException;
@@ -14,6 +16,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import client.controller.ClientAction;
 import db.Tweet;
 
 public class Sub implements javax.jms.MessageListener {
@@ -27,8 +30,11 @@ public class Sub implements javax.jms.MessageListener {
 	TopicSession topicSession;
 	String topicConnectionFactoryName = "ConnectionFactory";
 	
-	public Sub(String name,String topicName) {
+	private ClientAction clientAction;
+	
+	public Sub(String name,String topicName,ClientAction clientAction) {
 		this.subName = name;
+		this.clientAction = clientAction;
 		setupSouscripteur(topicName);
 	}
 	
@@ -106,6 +112,13 @@ public class Sub implements javax.jms.MessageListener {
 				 ObjectMessage objectMessage = (ObjectMessage)message;
 				 Tweet tweet = (Tweet) objectMessage.getObject();
 				 System.out.println("recept tweet: "+tweet.getMessage());
+				 HashMap<String, String> hashMap = new HashMap<>();
+				 hashMap.put("message", tweet.getMessage());
+				 try {
+					clientAction.newTweets(hashMap);
+				} catch (RemoteException e) {
+					e.printStackTrace();
+				}
 			} catch (JMSException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -114,8 +127,8 @@ public class Sub implements javax.jms.MessageListener {
 		
 	}
 	
-	public static void main(String[] args) {
-		new Sub("shiMac", "polytechMac");	
-	}
+//	public static void main(String[] args) {
+//		new Sub("shiMac", "polytechMac");	
+//	}
 
 }

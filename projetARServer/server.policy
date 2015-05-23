@@ -1,5 +1,7 @@
  grant codeBase "file:.${/}bin" {
   permission java.net.SocketPermission "127.0.0.1:1024-", "connect,resolve,accept"; 
+  permission java.net.SocketPermission "192.168.1.79:1024-", "connect,resolve,accept"; 
+  permission java.net.SocketPermission "192.168.1.87:1024-", "connect,resolve,accept";
   permission java.net.SocketPermission    "127.0.0.1:61681","accept,resolve";
   permission java.io.FilePermission "/Users/sth/develope/reseau/RMI/src/td1/facture.txt", "write" ;
   };
