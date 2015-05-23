@@ -1,5 +1,6 @@
 package client.view;
 
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -27,6 +28,7 @@ public class LoginFrame extends TweetsView {
 	private JLabel label2;
 	private JLabel label3;
 	private JLabel label4;
+	private JLabel errorMessageLabel;
 
 	private JButton login;
 	private JButton register;
@@ -63,7 +65,24 @@ public class LoginFrame extends TweetsView {
 		login.setBounds(250, 220, 95, 20);
 		register = new JButton("Register");
 		register.setBounds(5, 220, 95, 20);
+		errorMessageLabel = new JLabel();
+		errorMessageLabel.setBounds(100, 180, 150, 20);
+		errorMessageLabel.setForeground(Color.red);
 		
+		makeButtonAction();
+
+		label1.add(label2);
+		label1.add(label3);
+		label1.add(label4);
+		label1.add(login);
+		label1.add(errorMessageLabel);
+		label1.add(register);
+		con.add(label1);
+		con.add(username);
+		con.add(password);
+	}
+	
+	private void makeButtonAction(){
 		register.addActionListener(new ActionListener(){
 
 			@Override
@@ -88,24 +107,15 @@ public class LoginFrame extends TweetsView {
 						getController().closeLogin();
 						getController().displayPersonalPage();
 					} else {
-						
+						errorMessageLabel.setText("Login Fail");
 					}
 				} catch (RemoteException e1) {
-					// TODO Auto-generated catch block
+					errorMessageLabel.setText("Login Error");
 					e1.printStackTrace();
 				}
 			}
 			
 		});
-
-		label1.add(label2);
-		label1.add(label3);
-		label1.add(label4);
-		label1.add(login);
-		label1.add(register);
-		con.add(label1);
-		con.add(username);
-		con.add(password);
 	}
 
 	@Override

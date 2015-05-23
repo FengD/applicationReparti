@@ -17,7 +17,7 @@ public class PersonalPageFrame extends TweetsView{
 		frame = new JFrame();
 		frame.setBounds(0, 0, 1000, 500);
 		setController(tc);
-		frame.setTitle("Hello Page");
+		frame.setTitle("Welcome");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		buildFrame();
 		frame.setLocationRelativeTo(null);
@@ -27,9 +27,9 @@ public class PersonalPageFrame extends TweetsView{
 		newsPanel = NewsPanel.getNewsPanel();
 		newsPanel.setController(getController());
 		userInfoPanel = UserInfoPanel.getUserInfoPanel();
+		userInfoPanel.setController(getController());
 		frame.add(userInfoPanel,BorderLayout.WEST);
 		frame.add(newsPanel);
-//		frame.pack();
 	}
 
 	@Override

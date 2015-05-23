@@ -1,6 +1,8 @@
 package client.view;
 
+import java.awt.Color;
 import java.awt.Container;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,8 +27,9 @@ public class RegisterFrame extends TweetsView {
 	private JLabel label2;
 	private JLabel label3;
 	private JLabel label4;
+	private JLabel errorMessageLabel;
 
-	private JButton register;
+	private JButton register, back;
 
 	public RegisterFrame(ClientController tc) {
 		setController(tc);
@@ -58,7 +61,26 @@ public class RegisterFrame extends TweetsView {
 		label2.setBounds(10, 170, 130, 20);
 		register = new JButton("Register");
 		register.setBounds(250, 220, 95, 20);
+		back = new JButton("Back");
+		back.setBounds(5, 220, 95, 20);
+		errorMessageLabel = new JLabel();
+		errorMessageLabel.setBounds(150, 200, 150, 20);
+		errorMessageLabel.setForeground(Color.red);
 
+		makeButtonAction();
+
+		label1.add(label2);
+		label1.add(label3);
+		label1.add(label4);
+		label1.add(register);
+		label1.add(back);
+		label1.add(errorMessageLabel);
+		con.add(username);
+		con.add(password);
+		con.add(label1);
+	}
+	
+	private void makeButtonAction(){
 		register.addActionListener(new ActionListener() {
 
 			@Override
@@ -69,22 +91,25 @@ public class RegisterFrame extends TweetsView {
 						getController().closeRegister();
 						getController().displayLogin();
 					} else {
+						errorMessageLabel.setText("User Already Exists");
 					}
 				} catch (RemoteException e1) {
-					// TODO Auto-generated catch block
+					errorMessageLabel.setText("Error");
 					e1.printStackTrace();
 				}
 			}
 
 		});
+		
+		back.addActionListener(new ActionListener(){
 
-		label1.add(label2);
-		label1.add(label3);
-		label1.add(label4);
-		label1.add(register);
-		con.add(username);
-		con.add(password);
-		con.add(label1);
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				getController().closeRegister();
+				getController().displayLogin();
+			}
+			
+		});
 	}
 
 	@Override

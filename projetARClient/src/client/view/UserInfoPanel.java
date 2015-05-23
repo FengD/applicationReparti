@@ -7,6 +7,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import client.controller.ClientController;
+
 public class UserInfoPanel extends JPanel {
 
 	private static UserInfoPanel single = null;
@@ -17,6 +19,12 @@ public class UserInfoPanel extends JPanel {
 			followersP, topicP, buttonsP;
 	private JLabel[] topics;
 	private JButton deconnectButton;
+	
+	private ClientController controller;
+	
+	public void setController(ClientController controller){
+		this.controller = controller;
+	}
 
 	private UserInfoPanel() {
 		buildPanel();
