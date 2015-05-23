@@ -2,6 +2,7 @@ package client.controller;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.HashMap;
 
 import webservice.Service;
 import webservice.WebService;
@@ -80,7 +81,7 @@ public class ClientController extends UnicastRemoteObject implements ClientActio
 	}
 
 	@Override
-	public void refreshList() throws RemoteException {
+	public void newTweets(HashMap<String, String> tweets) throws RemoteException {
 		// TODO Auto-generated method stub
 		
 	}
