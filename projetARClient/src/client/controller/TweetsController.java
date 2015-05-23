@@ -3,7 +3,7 @@ package client.controller;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-import stub.WebService;
+import webservice.WebService;
 import client.view.TweetsView;
 
 public class TweetsController extends UnicastRemoteObject {
