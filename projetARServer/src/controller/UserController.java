@@ -87,8 +87,16 @@ public class UserController {
 		if (user != null && user.isLogin()) {
 			user.addFollowing(topic);
 			user.addSub(new Sub(user.getName()+topic.getTopicName(), topic.getTopicName(),clientAction));
+			addFollower(topic, user);
 		}
 		System.out.println("end add following");
+	}
+	
+	private void addFollower(Topic topic, User user){
+		User topicUser = findUserByName(topic.getTopicName());
+		if (topicUser!=null) {
+			topicUser.addFollowers(user);
+		}
 	}
 	
 	public User findUserByName(String userName){
@@ -103,6 +111,15 @@ public class UserController {
 		List<Topic> followings = user.getAllFollowing();
 		if (followings != null) {
 			return followings.size();
+		}
+		return 0;
+	}
+	
+	public int getNbFollower(String userName){
+		user = findUserByName(userName);
+		List<User> followers = user.getAllFollowers();
+		if (followers != null) {
+			return followers.size();
 		}
 		return 0;
 	}

@@ -11,6 +11,8 @@ public interface Service extends Remote{
 	
 	public int getNbFollowing(String userName) throws RemoteException;
 	
+	public int getNbFollower(String userName) throws RemoteException;
+	
 //	public boolean deleteFollowing(String topicName) throws RemoteException;
 	
 	public boolean writeTweet(String userName,String topic, String message) throws RemoteException;

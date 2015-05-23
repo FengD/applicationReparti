@@ -52,4 +52,10 @@ public class ServiceImpl extends UnicastRemoteObject implements Service {
 		return userController.getAllUserName();
 	}
 
+
+	@Override
+	public int getNbFollower(String userName) throws RemoteException {
+		return userController.getNbFollower(userName);
+	}
+
 }
