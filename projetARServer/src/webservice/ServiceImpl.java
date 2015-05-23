@@ -35,7 +35,7 @@ public class ServiceImpl extends UnicastRemoteObject implements Service {
 		System.out.println("owner "+owner.getName());
 		System.out.println("topic "+topic);
 		System.out.println("message "+message);
-		Pub.setupPublisher(owner,topic,message);
+		new Pub().setupPublisher(owner,topic,message);
 		return true;
 	}
 

@@ -54,8 +54,6 @@ public class Sub implements javax.jms.MessageListener {
 			topic = (Topic) context.lookup("dynamicTopics/"+topicName);//""
 //			topic = topicSession.createTopic("polytech");
 			
-			
-			topic = (Topic) context.lookup("dynamicTopics/polytechMac");
 			System.out.println("topic name:"+topicName);
 //			topic = topicSession.createTopic(topicName);
 			
@@ -127,8 +125,8 @@ public class Sub implements javax.jms.MessageListener {
 		
 	}
 	
-//	public static void main(String[] args) {
-//		new Sub("shiMac", "polytechMac");	
-//	}
+	public static void main(String[] args) {
+		new Sub("pub", "pub", null);	
+	}
 
 }

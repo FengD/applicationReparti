@@ -11,10 +11,10 @@ public class Server {
 	
 	public static void main(String[] agrs) throws RemoteException {
 
-		if (System.getSecurityManager() == null) 
-		{
-		    System.setSecurityManager(new java.rmi.RMISecurityManager());
-		}
+//		if (System.getSecurityManager() == null) 
+//		{
+//		    System.setSecurityManager(new java.rmi.RMISecurityManager());
+//		}
 		WebService webservice = new WebServiceImpl();
 //		WebService stub = (WebService) UnicastRemoteObject.exportObject(webservice, 9000);
 		Registry registry = LocateRegistry.createRegistry(8000);

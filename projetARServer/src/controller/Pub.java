@@ -6,48 +6,55 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.naming.Context;
 
+import org.apache.activemq.ActiveMQConnectionFactory;
+
+import com.sun.org.apache.xml.internal.resolver.helpers.PublicId;
+
 import client.controller.ClientAction;
 import db.Tweet;
 import db.User;
 
 public class Pub {
-	static private Topic topic;
-	static private TopicPublisher topicPublisher;
-	static InitialContext context;
-	static TopicConnectionFactory topicConnectionFactory;
-	static TopicConnection topicConnection;
-	static TopicSession topicSession;
-	static String topicConnectionFactoryName = "ConnectionFactory";
-	private static String host="127.0.0.1";
+	private Topic topic;
+	private TopicPublisher topicPublisher;
+	InitialContext context;
+	TopicConnectionFactory topicConnectionFactory;
+	TopicConnection topicConnection;
+	TopicSession topicSession;
+	private static String topicConnectionFactoryName = "ConnectionFactory";
+	private static String host="localhost";
 	
-	static void setup(String topicName){
+	public Pub(){
+		
+	}
+	
+	void setup(String topicName){
 		try {
 			System.out.println("start setup");
         	Hashtable<String, String> properties = new Hashtable<String, String>();
         	properties.put(Context.INITIAL_CONTEXT_FACTORY, 
         	    "org.apache.activemq.jndi.ActiveMQInitialContextFactory");
         	properties.put(Context.PROVIDER_URL, "tcp://"+host+":61616");
-			context = new InitialContext(properties);
+//			context = new InitialContext(properties);
 			
 			System.out.println("start creating factory");
-			topicConnectionFactory = (TopicConnectionFactory)context.lookup(topicConnectionFactoryName);
+//			topicConnectionFactory = (TopicConnectionFactory)context.lookup(topicConnectionFactoryName);
+			topicConnectionFactory = new ActiveMQConnectionFactory("tcp://0.0.0.0:61616");
 			System.out.println("create factory");
 			topicConnection = topicConnectionFactory.createTopicConnection();
 			System.out.println("create connection");
 			topicSession = topicConnection.createTopicSession(false,Session.AUTO_ACKNOWLEDGE);
 			System.out.println("create session");
 
-			topic = (Topic) context.lookup("dynamicTopics/"+topicName);
-			System.out.println("create topic");
-//			topic = topicSession.createTopic(topicName);
+//			topic = (Topic) context.lookup("dynamicTopics/"+topicName);
+			topic = topicSession.createTopic(topicName);
+			System.out.println("create topic");		
 		} catch (JMSException e) {
-			e.printStackTrace();
-		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public static void setupPublisher(User owner, String topicName, String tweetMessage){	 
+	public void setupPublisher(User owner, String topicName, String tweetMessage){	 
 		try {
 			 System.out.println("start setup publisher");
 			 setup(topicName);
@@ -67,7 +74,7 @@ public class Pub {
 
 	}
 	
-	static void publish(Tweet tweet) {
+	void publish(Tweet tweet) {
 		System.out.println("publish start");
 		ObjectMessage message;
 		try {
@@ -79,7 +86,7 @@ public class Pub {
 		}
 	}
 	
-	static void close() throws JMSException{
+	void close() throws JMSException{
 		 System.out.println("Close session");
 		 topicSession.close();
 		 System.out.println("Close connection");
@@ -87,6 +94,6 @@ public class Pub {
 	}
 	
 	public static void main(String[] args) {
-		Pub.setupPublisher(new User("pub", "pub"),"pub","hello pub");
+		new Pub().setupPublisher(new User("pub", "pub"),"pub","hello pub");
 	}
 }
