@@ -23,6 +23,16 @@ public class ClientController extends UnicastRemoteObject implements ClientActio
 	
 	private WebService webService;
 	
+	private Service service;
+	
+	public void setService(Service service){
+		this.service = service;
+	}
+	
+	public Service getService(){
+		return this.service;
+	}
+	
 	public void setLogin(TweetsView login){
 		this.login = login;
 	}
@@ -68,7 +78,6 @@ public class ClientController extends UnicastRemoteObject implements ClientActio
 	}
 	
 	public Service login(ClientAction clientAction) throws RemoteException{
-		System.out.println(clientAction.getUserName());
 		return webService.login(clientAction);
 	}
 

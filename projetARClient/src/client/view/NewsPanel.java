@@ -1,12 +1,17 @@
 package client.view;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import client.controller.ClientController;
 
 public class NewsPanel extends JPanel{
 	
@@ -17,6 +22,8 @@ public class NewsPanel extends JPanel{
 	private JPanel newsP, tweetP, followP;
 	private JComboBox usersBox;
 	private DefaultComboBoxModel usersBoxModel;
+	
+	private ClientController controller;
 	
 	
 	private NewsPanel(){
@@ -46,6 +53,25 @@ public class NewsPanel extends JPanel{
 		followP.setLayout(new BorderLayout());
 		followP.add(usersBox);
 		followP.add(followButton, BorderLayout.EAST);
+		
+		tweetButton.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					controller.getService().writeTweet(controller.getUserName(), controller.getUserName(), tweetMessage.getText());
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+			
+		});
+	}
+	
+	public void setController(ClientController controller){
+		this.controller = controller;
 	}
 	
 	public static NewsPanel getNewsPanel(){

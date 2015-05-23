@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import webservice.Service;
 import client.controller.ClientController;
 
 public class LoginFrame extends TweetsView {
@@ -80,13 +81,14 @@ public class LoginFrame extends TweetsView {
 				try {
 					getController().setUserName(username.getText());
 					getController().setPassword(password.getText());
-					System.out.println("hello1");
-					if(getController().login(getController()) != null){
-						System.out.println("hello2");
+					Service service;
+					service = getController().login(getController());
+					if( service != null){
+						getController().setService(service);
 						getController().closeLogin();
 						getController().displayPersonalPage();
 					} else {
-						System.out.println("hello3");
+						
 					}
 				} catch (RemoteException e1) {
 					// TODO Auto-generated catch block

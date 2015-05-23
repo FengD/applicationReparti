@@ -25,6 +25,7 @@ public class PersonalPageFrame extends TweetsView{
 	
 	public void buildFrame(){
 		newsPanel = NewsPanel.getNewsPanel();
+		newsPanel.setController(getController());
 		userInfoPanel = UserInfoPanel.getUserInfoPanel();
 		frame.add(userInfoPanel,BorderLayout.WEST);
 		frame.add(newsPanel);
