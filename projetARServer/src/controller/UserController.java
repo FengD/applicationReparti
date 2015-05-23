@@ -1,8 +1,10 @@
 package controller;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
+import client.controller.ClientAction;
 import db.Database;
 import db.Topic;
 import db.User;
@@ -31,33 +33,35 @@ public class UserController {
 		}
 	}
 	
-	public boolean login(String userName, String pwd){
+	public boolean login(ClientAction clientAction) throws RemoteException{
+		String userName = clientAction.getUserName();
+		String pwd = clientAction.getPassword();
 		user = findUserByName(userName);
 		if (user != null) {
 			if (user.checkPwd(pwd)) {
 				isLogin = true;
-				setupSubs();
+				setupSubs(clientAction);
 				return true;
 			}
 		}
 		return false;
 	}
 	
-	public void setupSubs(){
+	public void setupSubs(ClientAction clientAction){
 		if (isLogin) {
 			List<Topic> topics = user.getAllFollowing();
 			if (topics != null && !topics.isEmpty()) {
 				for (Topic topic : topics) {
-					subList.add(new Sub(user.getName(), topic.getTopicName()));
+					subList.add(new Sub(user.getName(), topic.getTopicName(),clientAction));
 				}
 			}
 		}
 	}
 	
-	public void addFollowing(Topic topic){
+	public void addFollowing(Topic topic,ClientAction clientAction){
 		if (isLogin) {
 			user.addFollowing(topic);
-			subList.add(new Sub(user.getName(), topic.getTopicName()));
+			subList.add(new Sub(user.getName(), topic.getTopicName(),clientAction));
 		}
 		System.out.println("end add following");
 	}
@@ -69,10 +73,11 @@ public class UserController {
 		return null;
 	}
 	
-	public static void main(String[] args) {
-		UserController userController = new UserController();
-		userController.createNewUser("shi", "shi");
-		userController.login("shi", "shi");
-		userController.addFollowing(new Topic("polytechMac"));
-	}
+	
+//	public static void main(String[] args) {
+//		UserController userController = new UserController();
+//		userController.createNewUser("shi", "shi");
+//		userController.login("shi", "shi");
+//		userController.addFollowing(new Topic("polytechMac"));
+//	}
 }

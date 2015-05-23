@@ -6,7 +6,9 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.naming.Context;
 
+import client.controller.ClientAction;
 import db.Tweet;
+import db.User;
 
 public class Pub {
 	static private Topic topic;
@@ -39,14 +41,15 @@ public class Pub {
 		}
 	}
 	
-	static void setupPublisher(String topicName){	 
+	public static void setupPublisher(User owner, String topicName, String tweetMessage){	 
 		try {
 			 setup(topicName);
 			 topicPublisher = topicSession.createPublisher(topic);
 			 topicPublisher.setDeliveryMode(DeliveryMode.PERSISTENT);
 			 topicConnection.start();
 			 //send messagge
-			 publish(new Tweet("small bird king"));
+			 Tweet tweet = new Tweet(owner,tweetMessage);
+			 publish(tweet);
 			 close();
 		} catch (JMSException e) {
 			e.printStackTrace();
@@ -71,8 +74,8 @@ public class Pub {
 		 System.out.println("Close connection");
 		 topicConnection.close();
 	}
-	
-	public static void main(String[] args) {
-		Pub.setupPublisher("polytechMac");
-	}
+//	
+//	public static void main(String[] args) {
+//		Pub.setupPublisher("polytechMac");
+//	}
 }
