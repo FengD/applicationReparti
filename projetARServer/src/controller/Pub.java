@@ -18,7 +18,7 @@ public class Pub {
 	static TopicConnection topicConnection;
 	static TopicSession topicSession;
 	static String topicConnectionFactoryName = "ConnectionFactory";
-	private static String host="192.168.1.87";
+	private static String host="127.0.0.1";
 	
 	static void setup(String topicName){
 		try {
