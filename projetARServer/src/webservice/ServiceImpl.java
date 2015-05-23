@@ -30,7 +30,11 @@ public class ServiceImpl extends UnicastRemoteObject implements Service {
 	@Override
 	public boolean writeTweet(String userName, String topic,String message)
 			throws RemoteException {
+		System.out.println("start write tweet");
 		User owner = userController.findUserByName(userName);
+		System.out.println("owner "+owner.getName());
+		System.out.println("topic "+topic);
+		System.out.println("message "+message);
 		Pub.setupPublisher(owner,topic,message);
 		return true;
 	}
