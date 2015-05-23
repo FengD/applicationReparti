@@ -7,4 +7,6 @@ projetARServer/.settings/*
 projetARServer/.project
 projetARServer/bin/*
 projetARServer/src/rmi/*.class
- projetARServer/src/rmi/*.class
+projetARServer/src/rmi/*.class
+
+*.class

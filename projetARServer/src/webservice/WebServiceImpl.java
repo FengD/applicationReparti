@@ -86,6 +86,7 @@ public class WebServiceImpl extends UnicastRemoteObject implements WebService {
 
 	@Override
 	public Service login(ClientAction clientAction) throws RemoteException {
+		System.out.println("start login");
 		String name = clientAction.getUserName();
 		String pwd = clientAction.getPassword();
 		System.out.println("login name: "+name+" pwd: "+ pwd);
