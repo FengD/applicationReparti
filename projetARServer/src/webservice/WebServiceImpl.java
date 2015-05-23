@@ -35,8 +35,8 @@ public class WebServiceImpl extends UnicastRemoteObject implements WebService {
 //	}
 
 	@Override
-	public boolean disconnect() throws RemoteException {
-		// TODO Auto-generated method stub
+	public boolean disconnect(String name) throws RemoteException {
+		
 		return false;
 	}
 /**

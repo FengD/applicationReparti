@@ -71,24 +71,21 @@ public class Sub implements javax.jms.MessageListener {
 			 topicConnection.start();
 	
 			 topicSubscriber = topicSession.createDurableSubscriber(topic,subName);
-//			 topicSubscriber.setMessageListener(this);
-
-			 System.out.println("start while");
-			 
-		     while (true){
-		    	System.out.println("in while");
-		    	Message m= topicSubscriber.receive(10000);
-		        if (m == null) {
-					System.out.println("No more messages");
-					break;
-				}
-		        else {
-		        	System.out.print("recept synch: "); 
-		        	onMessage(m);
-				}
-		     }
-		     System.out.println("end while");
-		     topicConnection.close();
+			 topicSubscriber.setMessageListener(this);
+//		     while (true){
+//		    	System.out.println("in while");
+//		    	Message m= topicSubscriber.receive(10000);
+//		        if (m == null) {
+//					System.out.println("No more messages");
+//					break;
+//				}
+//		        else {
+//		        	System.out.print("recept synch: "); 
+//		        	onMessage(m);
+//				}
+//		     }
+//		     System.out.println("end while");
+//		     topicConnection.close();
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}
@@ -114,6 +111,7 @@ public class Sub implements javax.jms.MessageListener {
 				 hashMap.put("message", tweet.getMessage());
 				 try {
 					clientAction.newTweets(hashMap);
+					System.out.println("new tweet sended");
 				} catch (RemoteException e) {
 					e.printStackTrace();
 				}

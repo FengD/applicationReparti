@@ -11,15 +11,11 @@ import db.User;
 
 public class UserController {
 	User user;
-	List<Sub> subList;
 	Pub pub;
 	Database db;
-	boolean isLogin;
 	
 	public UserController() {
 		db = Database.getInstance();
-		subList = new ArrayList<>();
-		isLogin = false;
 	}
 	
 	public boolean createNewUser(String userName, String pwd){
@@ -39,7 +35,7 @@ public class UserController {
 		user = findUserByName(userName);
 		if (user != null) {
 			if (user.checkPwd(pwd)) {
-				isLogin = true;
+				user.setIsLogin(true);
 				setupSubs(clientAction);
 				return true;
 			}
@@ -47,21 +43,45 @@ public class UserController {
 		return false;
 	}
 	
+	public boolean deconnecter(String name){
+		user = findUserByName(name);
+		if (user != null) {
+			user.setIsLogin(false);
+			for (Sub sub : user.getSubs()) {
+				sub.close();
+			}
+			return true;
+		}
+		return false;
+	}
+	
 	public void setupSubs(ClientAction clientAction){
-		if (isLogin) {
+		try {
+			user = findUserByName(clientAction.getUserName());
+		} catch (RemoteException e) {
+			user = null;
+			e.printStackTrace();
+		}
+		if (user != null && user.isLogin()) {
 			List<Topic> topics = user.getAllFollowing();
 			if (topics != null && !topics.isEmpty()) {
 				for (Topic topic : topics) {
-					subList.add(new Sub(user.getName(), topic.getTopicName(),clientAction));
+					user.addSub(new Sub(user.getName(), topic.getTopicName(),clientAction));
 				}
 			}
 		}
 	}
 	
 	public void addFollowing(Topic topic,ClientAction clientAction){
-		if (isLogin) {
+		try {
+			user = findUserByName(clientAction.getUserName());
+		} catch (RemoteException e) {
+			user = null;
+			e.printStackTrace();
+		}
+		if (user != null && user.isLogin()) {
 			user.addFollowing(topic);
-			subList.add(new Sub(user.getName(), topic.getTopicName(),clientAction));
+			user.addSub(new Sub(user.getName()+topic.getTopicName(), topic.getTopicName(),clientAction));
 		}
 		System.out.println("end add following");
 	}

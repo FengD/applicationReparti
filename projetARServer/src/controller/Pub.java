@@ -31,10 +31,10 @@ public class Pub {
 	void setup(String topicName){
 		try {
 			System.out.println("start setup");
-        	Hashtable<String, String> properties = new Hashtable<String, String>();
-        	properties.put(Context.INITIAL_CONTEXT_FACTORY, 
-        	    "org.apache.activemq.jndi.ActiveMQInitialContextFactory");
-        	properties.put(Context.PROVIDER_URL, "tcp://"+host+":61616");
+//        	Hashtable<String, String> properties = new Hashtable<String, String>();
+//        	properties.put(Context.INITIAL_CONTEXT_FACTORY, 
+//        	    "org.apache.activemq.jndi.ActiveMQInitialContextFactory");
+//        	properties.put(Context.PROVIDER_URL, "tcp://"+host+":61616");
 //			context = new InitialContext(properties);
 			
 			System.out.println("start creating factory");
@@ -94,6 +94,6 @@ public class Pub {
 	}
 	
 	public static void main(String[] args) {
-		new Pub().setupPublisher(new User("pub", "pub"),"pub","hello pub");
+		new Pub().setupPublisher(new User("pub", "pub"),"pub","hello pub6 ");
 	}
 }
