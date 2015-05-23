@@ -33,7 +33,7 @@ public class UserController {
 		String userName = clientAction.getUserName();
 		String pwd = clientAction.getPassword();
 		user = findUserByName(userName);
-		if (user != null) {
+		if (user != null && !user.isLogin()) {
 			if (user.checkPwd(pwd)) {
 				user.setIsLogin(true);
 				setupSubs(clientAction);
@@ -46,7 +46,7 @@ public class UserController {
 	public boolean deconnecter(String name){
 		System.out.println(name+" deconnecte");
 		user = findUserByName(name);
-		if (user != null) {
+		if (user != null && user.isLogin()) {
 			user.setIsLogin(false);
 			int i = 1;
 			for (Sub sub : user.getSubs()) {
@@ -96,6 +96,19 @@ public class UserController {
 			return db.getUserByName(userName);
 		}
 		return null;
+	}
+	
+	public int getNbFollowing(String userName){
+		user = findUserByName(userName);
+		List<Topic> followings = user.getAllFollowing();
+		if (followings != null) {
+			return followings.size();
+		}
+		return 0;
+	}
+	
+	public List<String> getAllUserName(){
+		return db.getAllUserName();
 	}
 	
 	

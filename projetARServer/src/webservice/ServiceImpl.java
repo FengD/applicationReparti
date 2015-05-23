@@ -2,6 +2,7 @@ package webservice;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.List;
 
 import client.controller.ClientAction;
 import controller.Pub;
@@ -37,6 +38,18 @@ public class ServiceImpl extends UnicastRemoteObject implements Service {
 		System.out.println("message "+message);
 		new Pub().setupPublisher(owner,topic,message);
 		return true;
+	}
+
+
+	@Override
+	public int getNbFollowing(String userName) throws RemoteException {
+		return userController.getNbFollowing(userName);
+	}
+
+
+	@Override
+	public List<String> getAllUser() throws RemoteException {
+		return userController.getAllUserName();
 	}
 
 }

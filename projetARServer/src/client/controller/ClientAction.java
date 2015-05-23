@@ -16,5 +16,7 @@ public interface ClientAction extends Remote{
 	public boolean isConnecte() throws RemoteException;
 
 	public void refreshTopics() throws RemoteException;
+	
+	public void newUser(String userName) throws RemoteException;
 
 }

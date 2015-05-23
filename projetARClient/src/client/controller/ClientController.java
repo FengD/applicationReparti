@@ -127,4 +127,10 @@ public class ClientController extends UnicastRemoteObject implements ClientActio
 		this.passWord = password;
 	}
 
+	@Override
+	public void newUser(String userName) throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
