@@ -22,17 +22,22 @@ public class Pub {
 	
 	static void setup(String topicName){
 		try {
+			System.out.println("start setup");
         	Hashtable<String, String> properties = new Hashtable<String, String>();
         	properties.put(Context.INITIAL_CONTEXT_FACTORY, 
         	    "org.apache.activemq.jndi.ActiveMQInitialContextFactory");
-        	properties.put(Context.PROVIDER_URL, "tcp://localhost:61616");
+        	properties.put(Context.PROVIDER_URL, "tcp://192.168.1.87:61616");
 			context = new InitialContext(properties);
 			
 			topicConnectionFactory = (TopicConnectionFactory)context.lookup(topicConnectionFactoryName);
+			System.out.println("create factory");
 			topicConnection = topicConnectionFactory.createTopicConnection();
+			System.out.println("create connection");
 			topicSession = topicConnection.createTopicSession(false,Session.AUTO_ACKNOWLEDGE);
+			System.out.println("create session");
 
 			topic = (Topic) context.lookup("dynamicTopics/"+topicName);
+			System.out.println("create topic");
 //			topic = topicSession.createTopic(topicName);
 		} catch (JMSException e) {
 			e.printStackTrace();
@@ -43,10 +48,14 @@ public class Pub {
 	
 	public static void setupPublisher(User owner, String topicName, String tweetMessage){	 
 		try {
+			 System.out.println("start setup publisher");
 			 setup(topicName);
+			 System.out.println("end setup");
 			 topicPublisher = topicSession.createPublisher(topic);
+			 System.out.println("create publisher");
 			 topicPublisher.setDeliveryMode(DeliveryMode.PERSISTENT);
 			 topicConnection.start();
+			 System.out.println("connection start");
 			 //send messagge
 			 Tweet tweet = new Tweet(owner,tweetMessage);
 			 publish(tweet);
@@ -58,6 +67,7 @@ public class Pub {
 	}
 	
 	static void publish(Tweet tweet) {
+		System.out.println("publish start");
 		ObjectMessage message;
 		try {
 			message = topicSession.createObjectMessage(tweet);
@@ -74,8 +84,8 @@ public class Pub {
 		 System.out.println("Close connection");
 		 topicConnection.close();
 	}
-//	
-//	public static void main(String[] args) {
-//		Pub.setupPublisher("polytechMac");
-//	}
+	
+	public static void main(String[] args) {
+		Pub.setupPublisher(new User("pub", "pub"),"pub","hello pub");
+	}
 }
