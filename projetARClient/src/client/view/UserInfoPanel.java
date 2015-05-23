@@ -3,6 +3,7 @@ package client.view;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -13,8 +14,9 @@ public class UserInfoPanel extends JPanel {
 	private JLabel userName, tweets, following, followers;
 	private JLabel tweetsN, followingN, followersN;
 	private JPanel userInfoP, userNameP, infoP, tweetsP, followingP,
-			followersP, topicP;
+			followersP, topicP, buttonsP;
 	private JLabel[] topics;
+	private JButton deconnectButton;
 
 	private UserInfoPanel() {
 		buildPanel();
@@ -28,6 +30,7 @@ public class UserInfoPanel extends JPanel {
 		tweetsN = new JLabel("1");
 		followingN = new JLabel("15");
 		followersN = new JLabel("2");
+		buttonsP = new JPanel();
 		userInfoP = new JPanel();
 		userNameP = new JPanel();
 		infoP = new JPanel();
@@ -35,10 +38,13 @@ public class UserInfoPanel extends JPanel {
 		followingP = new JPanel();
 		followersP = new JPanel();
 		topicP = new JPanel();
+		deconnectButton = new JButton("DECONNECT");
+		
 		this.setLayout(new BorderLayout());
 
 		this.add(userInfoP, BorderLayout.NORTH);
 		this.add(topicP);
+		this.add(buttonsP, BorderLayout.SOUTH);
 
 		userInfoP.add(userNameP);
 		userInfoP.add(infoP);
@@ -62,6 +68,8 @@ public class UserInfoPanel extends JPanel {
 		followersP.add(followers);
 		followersP.add(followersN);
 		followersP.setLayout(new GridLayout(0, 1));
+		
+		buttonsP.add(deconnectButton);
 
 		topics = new JLabel[10];
 		for (int i = 0; i < 10; i++) {
