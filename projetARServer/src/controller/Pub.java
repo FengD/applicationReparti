@@ -30,16 +30,16 @@ public class Pub {
 	
 	void setup(String topicName){
 		try {
-			System.out.println("start setup");
-//        	Hashtable<String, String> properties = new Hashtable<String, String>();
-//        	properties.put(Context.INITIAL_CONTEXT_FACTORY, 
-//        	    "org.apache.activemq.jndi.ActiveMQInitialContextFactory");
-//        	properties.put(Context.PROVIDER_URL, "tcp://"+host+":61616");
-//			context = new InitialContext(properties);
+//			System.out.println("start setup");
+        	Hashtable<String, String> properties = new Hashtable<String, String>();
+        	properties.put(Context.INITIAL_CONTEXT_FACTORY, 
+        	    "org.apache.activemq.jndi.ActiveMQInitialContextFactory");
+        	properties.put(Context.PROVIDER_URL, "tcp://"+host+":61616");
+			context = new InitialContext(properties);
 			
-//			System.out.println("start creating factory");
-//			topicConnectionFactory = (TopicConnectionFactory)context.lookup(topicConnectionFactoryName);
-			topicConnectionFactory = new ActiveMQConnectionFactory("tcp://0.0.0.0:61616");
+			System.out.println("start creating factory");
+			topicConnectionFactory = (TopicConnectionFactory)context.lookup(topicConnectionFactoryName);
+//			topicConnectionFactory = new ActiveMQConnectionFactory("tcp://0.0.0.0:61616");
 //			System.out.println("create factory");
 			topicConnection = topicConnectionFactory.createTopicConnection();
 //			System.out.println("create connection");
@@ -50,6 +50,8 @@ public class Pub {
 			topic = topicSession.createTopic(topicName);
 //			System.out.println("create topic");		
 		} catch (JMSException e) {
+			e.printStackTrace();
+		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 	}
@@ -65,7 +67,7 @@ public class Pub {
 			 topicConnection.start();
 //			 System.out.println("connection start");
 			 //send messagge
-			 Tweet tweet = new Tweet(owner,tweetMessage);
+			 Tweet tweet = new Tweet(owner,tweetMessage,topicName);
 			 publish(tweet);
 			 close();
 		} catch (JMSException e) {
@@ -75,12 +77,12 @@ public class Pub {
 	}
 	
 	void publish(Tweet tweet) {
-//		System.out.println("publish start");
+		System.out.println("publish start");
 		ObjectMessage message;
 		try {
 			message = topicSession.createObjectMessage(tweet);
 			topicPublisher.publish(message);
-			System.out.println(tweet.getMessage());
+			System.out.println("publish "+tweet.getMessage());
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}

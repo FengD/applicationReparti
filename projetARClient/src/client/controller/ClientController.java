@@ -3,13 +3,15 @@ package client.controller;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
+import java.util.List;
 
 import webservice.Service;
 import webservice.WebService;
 import client.view.PersonalPageView;
 import client.view.TweetsView;
 
-public class ClientController extends UnicastRemoteObject implements ClientAction{
+public class ClientController extends UnicastRemoteObject implements
+		ClientAction {
 	protected ClientController() throws RemoteException {
 		super();
 		// TODO Auto-generated constructor stub
@@ -18,83 +20,88 @@ public class ClientController extends UnicastRemoteObject implements ClientActio
 	private TweetsView login;
 	private TweetsView register;
 	private PersonalPageView personalPage;
-	
+
 	private String userName;
 	private String passWord;
-	
+
 	private WebService webService;
-	
+
 	private Service service;
-	
-	public void setService(Service service){
+
+	public void setService(Service service) {
 		this.service = service;
 	}
-	
-	public Service getService(){
+
+	public Service getService() {
 		return this.service;
 	}
-	
-	public void setLogin(TweetsView login){
+
+	public void setLogin(TweetsView login) {
 		this.login = login;
 	}
-	
-	public void setRegister(TweetsView register){
+
+	public void setRegister(TweetsView register) {
 		this.register = register;
 	}
-	
-	public void setPersonalPage(PersonalPageView personalPage){
+
+	public void setPersonalPage(PersonalPageView personalPage) {
 		this.personalPage = personalPage;
 	}
-	
-	public void displayLogin(){
+
+	public void displayLogin() {
 		login.display();
 	}
-	
-	public void closeLogin(){
+
+	public void closeLogin() {
 		login.close();
 	}
-	
-	public void displayRegister(){
+
+	public void displayRegister() {
 		register.display();
 	}
-	
-	public void closeRegister(){
+
+	public void closeRegister() {
 		register.close();
 	}
-	
-	public void displayPersonalPage(){
+
+	public void displayPersonalPage() {
 		personalPage.display();
 	}
-	
-	public void closePersonalPage(){
+
+	public void closePersonalPage() {
 		personalPage.close();
 	}
-	
-	public void setWebservice(WebService webService){
+
+	public void setWebservice(WebService webService) {
 		this.webService = webService;
 	}
-	
-	public boolean register(String userName, String password) throws RemoteException{
+
+	public boolean register(String userName, String password)
+			throws RemoteException {
 		return webService.register(userName, password);
 	}
-	
-	public Service login(ClientAction clientAction) throws RemoteException{
+
+	public Service login(ClientAction clientAction) throws RemoteException {
 		personalPage.setUserInfo(clientAction.getUserName());
 		return webService.login(clientAction);
 	}
-	
-	public boolean deconnect(String userName) throws RemoteException{
+
+	public boolean deconnect(String userName) throws RemoteException {
 		return webService.disconnect(userName);
 	}
-	
+
 	public void setFollowings(int nbFollowings) {
-		personalPage.setFollowings(""+nbFollowings);
-		
+		personalPage.setFollowings("" + nbFollowings);
+
 	}
 
 	public void setFollowers(int nbFollowers) {
-		personalPage.setFollowers(""+nbFollowers);
-		
+		personalPage.setFollowers("" + nbFollowers);
+
+	}
+	
+	public void setUsersBox(Object[] usersName){
+		personalPage.setUsersBox(usersName);
 	}
 
 	@Override
@@ -110,14 +117,16 @@ public class ClientController extends UnicastRemoteObject implements ClientActio
 	}
 
 	@Override
-	public void newTweets(HashMap<String, String> tweets) throws RemoteException {
-		personalPage.setNews(tweets.get("message"));
+	public void newTweets(HashMap<String, String> tweets)
+			throws RemoteException {
+		personalPage.setNews("sender:" + tweets.get("owner") + "  topic:"
+				+ tweets.get("topic") + "  message:" + tweets.get("message"));
 	}
 
 	@Override
 	public void refreshListTout() throws RemoteException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -129,9 +138,9 @@ public class ClientController extends UnicastRemoteObject implements ClientActio
 	@Override
 	public void refreshTopics() throws RemoteException {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
@@ -142,20 +151,19 @@ public class ClientController extends UnicastRemoteObject implements ClientActio
 
 	@Override
 	public void newUser(String userName) throws RemoteException {
-		// TODO Auto-generated method stub
-		
+		personalPage.addNewUser(userName);
 	}
 
 	@Override
 	public void updateFollowings(int nb) throws RemoteException {
-		personalPage.setFollowings(""+nb);
-		
+		personalPage.setFollowings("" + nb);
+
 	}
 
 	@Override
 	public void updateFollowers(int nb) throws RemoteException {
-		personalPage.setFollowers(""+nb);
-		
+		personalPage.setFollowers("" + nb);
+
 	}
 
 }

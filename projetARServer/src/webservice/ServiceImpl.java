@@ -19,39 +19,36 @@ public class ServiceImpl extends UnicastRemoteObject implements Service {
 		super();
 		this.userController = userController;
 	}
-	
 
 	@Override
-	public boolean addFollowing(String topicName, ClientAction clientAction) throws RemoteException {
+	public boolean addFollowing(String topicName, ClientAction clientAction)
+			throws RemoteException {
 		Topic topic = new Topic(topicName);
-		userController.addFollowing(topic,clientAction);
+		userController.addFollowing(topic, clientAction);
 		return false;
 	}
 
 	@Override
-	public boolean writeTweet(String userName, String topic,String message)
+	public boolean writeTweet(String userName, String topic, String message)
 			throws RemoteException {
 		System.out.println("start write tweet");
 		User owner = userController.findUserByName(userName);
-		System.out.println("owner "+owner.getName());
-		System.out.println("topic "+topic);
-		System.out.println("message "+message);
-		new Pub().setupPublisher(owner,topic,message);
+		System.out.println("owner " + owner.getName());
+		System.out.println("topic " + topic);
+		System.out.println("message " + message);
+		userController.publish(owner, topic, message, true);
 		return true;
 	}
-
 
 	@Override
 	public int getNbFollowing(String userName) throws RemoteException {
 		return userController.getNbFollowing(userName);
 	}
 
-
 	@Override
 	public List<String> getAllUser() throws RemoteException {
 		return userController.getAllUserName();
 	}
-
 
 	@Override
 	public int getNbFollower(String userName) throws RemoteException {

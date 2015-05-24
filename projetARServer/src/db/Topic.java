@@ -15,4 +15,10 @@ public class Topic implements Serializable{
 	public String getTopicName(){
 		return this.topic;
 	}
+	
+	@Override
+	public boolean equals(Object t){
+		Topic topic = (Topic) t;
+		return this.topic.equals(topic.getTopicName());
+	}
 }

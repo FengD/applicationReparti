@@ -25,5 +25,9 @@ public abstract class PersonalPageView {
 	public abstract void setFollowings(String nbFollowings);
 	
 	public abstract void setFollowers(String nbFollowers);
+	
+	public abstract void setUsersBox(Object[] usersName);
+	
+	public abstract void addNewUser(String newUser);
 
 }

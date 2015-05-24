@@ -15,7 +15,8 @@ public class UserController {
 	User user;
 	Pub pub;
 	Database db;
-	Map<String,ClientAction> clientActions;
+	Map<String, ClientAction> clientActions;
+	private static String hashTag = "#";
 
 	public UserController() {
 		db = Database.getInstance();
@@ -28,6 +29,7 @@ public class UserController {
 			return false;
 		} else {
 			user = new User(userName, pwd);
+			user.addFollowing(new Topic(user.getName()));
 			db.signUpUser(user);
 			return true;
 		}
@@ -77,8 +79,9 @@ public class UserController {
 			List<Topic> topics = user.getAllFollowing();
 			if (topics != null && !topics.isEmpty()) {
 				for (Topic topic : topics) {
-					user.addSub(new Sub(user.getName() + topic.getTopicName(),
-							topic.getTopicName(), clientAction));
+					user.addSub(new Sub(user.getName(), user.getName()
+							+ topic.getTopicName(), topic.getTopicName(),
+							clientAction));
 				}
 			}
 		}
@@ -87,13 +90,17 @@ public class UserController {
 	public void addFollowing(Topic topic, ClientAction clientAction) {
 		try {
 			user = findUserByName(clientAction.getUserName());
-			if (user != null && user.isLogin()) {
+			if (user != null && user.isLogin() && !user.isFollowed(topic)) {
 				user.addFollowing(topic);
-				user.addSub(new Sub(user.getName() + topic.getTopicName(),
-						topic.getTopicName(), clientAction));
-				clientAction.updateFollowings(getNbFollowing(user.getName()));
-				addFollower(topic, user,clientAction);
-				
+				user.addSub(new Sub(user.getName(), user.getName()
+						+ topic.getTopicName(), topic.getTopicName(),
+						clientAction));
+				if (clientAction != null) {
+					clientAction
+							.updateFollowings(getNbFollowing(user.getName()));
+				}
+				addFollower(topic, user, clientAction);
+
 			}
 			System.out.println("end add following");
 		} catch (RemoteException e) {
@@ -102,11 +109,17 @@ public class UserController {
 		}
 	}
 
-	private void addFollower(Topic topic, User user,ClientAction clientAction) throws RemoteException {
+	private void addFollower(Topic topic, User user, ClientAction clientAction)
+			throws RemoteException {
 		User topicUser = findUserByName(topic.getTopicName());
 		if (topicUser != null) {
 			topicUser.addFollowers(user);
-			clientActions.get(topicUser.getName()).updateFollowers(getNbFollower(topicUser.getName()));
+			ClientAction topicClientAction = clientActions.get(topicUser
+					.getName());
+			if (topicClientAction != null) {
+				topicClientAction.updateFollowers(getNbFollower(topicUser
+						.getName()));
+			}
 		}
 	}
 
@@ -120,8 +133,8 @@ public class UserController {
 	public int getNbFollowing(String userName) {
 		user = findUserByName(userName);
 		List<Topic> followings = user.getAllFollowing();
-		if (followings != null) {
-			return followings.size();
+		if (followings != null && !followings.isEmpty()) {
+			return followings.size()-1;
 		}
 		return 0;
 	}
@@ -137,6 +150,31 @@ public class UserController {
 
 	public List<String> getAllUserName() {
 		return db.getAllUserName();
+	}
+
+	public void publish(User owner, String topic, String tweetMessage,
+			boolean firstTime) {
+		new Pub().setupPublisher(owner, topic, tweetMessage);
+		if (firstTime) {
+			handleTweetMessage(owner, tweetMessage);
+		}
+	}
+
+	private void handleTweetMessage(User owner, String tweetMessage) {
+		System.out.println("start handle tweet message");
+		ArrayList<String> tags = new ArrayList<>();
+		String[] message = tweetMessage.split(" ");
+		for (String word : message) {
+			if (!word.isEmpty() && word.startsWith(hashTag)) {
+				System.out.println("get tag: " + word);
+				// add self as sub of hashtag
+				addFollowing(new Topic(word),
+						clientActions.get(owner.getName()));
+				// send hashtag to topic
+				publish(owner, word, tweetMessage, false);
+			}
+		}
+		System.out.println("finish handling");
 	}
 
 	// public static void main(String[] args) {

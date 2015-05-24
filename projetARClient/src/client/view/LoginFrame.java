@@ -14,6 +14,8 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import com.sun.org.apache.xpath.internal.operations.String;
+
 import webservice.Service;
 import client.controller.ClientController;
 
@@ -106,6 +108,7 @@ public class LoginFrame extends TweetsView {
 						getController().setService(service);
 						getController().setFollowings(getController().getService().getNbFollowing(getController().getUserName()));
 						getController().setFollowers(getController().getService().getNbFollower(getController().getUserName()));
+						getController().setUsersBox(getController().getService().getAllUser().toArray());
 						getController().closeLogin();
 						getController().displayPersonalPage();
 					} else {

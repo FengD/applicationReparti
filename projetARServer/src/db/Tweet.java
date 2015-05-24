@@ -11,15 +11,17 @@ public class Tweet implements Serializable {
 	String message;
 	
 	List<String> photos;
-	List<Topic> topics;
+	Topic topic;
 	List<User> mentionUsers;
 	
-	public Tweet(User owner, String message){
-		this.message = message;
+	public Tweet(User owner, String tweetMessage, String topic){
+		this.message = tweetMessage;
+		this.owner = owner;
 		photos = new ArrayList<>();
-		topics = new ArrayList<>();
+		this.topic = new Topic(topic);
 		mentionUsers = new ArrayList<>();
 	}
+
 	
 	//get/set owner
 	public void setOwner(User owner){
@@ -56,17 +58,13 @@ public class Tweet implements Serializable {
 		return this.photos;
 	}
 	
-	//topic add delete getAll
-	public boolean addTopic(Topic topic){
-		return this.topics.add(topic);
+	//topic set get
+	public void setTopic(Topic topic){
+		this.topic = topic;
 	}
 	
-	public boolean deleteTopic(Topic topic){
-		return this.topics.remove(topic);
-	}
-	
-	public List<Topic> getAllTopics(){
-		return this.topics;
+	public Topic getTopic(){
+		return this.topic;
 	}
 	
 	//mention user add delete getAll

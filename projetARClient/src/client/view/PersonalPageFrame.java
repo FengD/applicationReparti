@@ -19,7 +19,7 @@ public class PersonalPageFrame extends PersonalPageView {
 		frame = new JFrame();
 		frame.setBounds(0, 0, 1000, 500);
 		setController(tc);
-		frame.setTitle("Welcome");
+		frame.setTitle("");
 		// frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.addWindowListener(new WindowAdapter() {
 
@@ -66,7 +66,7 @@ public class PersonalPageFrame extends PersonalPageView {
 	@Override
 	public void setUserInfo(String name) {
 		userInfoPanel.setUserInfo(name);
-		frame.setTitle(frame.getTitle() + " " + name);
+		frame.setTitle("Welcome" + " " + name);
 	}
 
 	@Override
@@ -80,5 +80,17 @@ public class PersonalPageFrame extends PersonalPageView {
 		userInfoPanel.setFollowers(nbFollowers);
 		
 	}
+
+	@Override
+	public void setUsersBox(Object[] usersName) {
+		newsPanel.setUserBox(usersName);
+	}
+
+	@Override
+	public void addNewUser(String newUser) {
+		newsPanel.addNewUser(newUser);
+	}
+
+	
 
 }

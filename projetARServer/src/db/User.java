@@ -12,9 +12,9 @@ public class User extends Topic implements Serializable{
 	private String name;
 	private String pwd;
 	private String profile;
-	private List<Topic> following;
-	private List<User> followers;
-	private List<Sub> subList;
+	transient private List<Topic> following;
+	transient private List<User> followers;
+	transient private List<Sub> subList;
 	private boolean isLogin;
 	
 	public User(String name, String pwd){
@@ -96,6 +96,10 @@ public class User extends Topic implements Serializable{
 	
 	public List<Topic> getAllFollowing(){
 		return this.following;
+	}
+	
+	public boolean isFollowed(Topic topic) {
+		return this.following.contains(topic);
 	}
 	
 	//followers add delete getAll
