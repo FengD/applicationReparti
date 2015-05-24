@@ -25,14 +25,9 @@ public class UserInfoPanel extends JPanel {
 	private JButton deconnectButton;
 	
 	private ClientController controller;
-	
-	public void setController(ClientController controller){
-		this.controller = controller;
-	}
 
 	public UserInfoPanel(ClientController controller) {
 		this.controller = controller;
-		System.out.println(controller.getService());
 		buildPanel();
 	}
 
@@ -118,5 +113,15 @@ public class UserInfoPanel extends JPanel {
 	public void setUserInfo(String n){
 		userName.setText(n);
 	}
+	
+	public void setFollowings(String nbFollowings){
+		followingN.setText(nbFollowings);
+	}
+	
+	public void setFollowers(String nbFollowers){
+		followersN.setText(nbFollowers);
+	}
+	
+	
 
 }

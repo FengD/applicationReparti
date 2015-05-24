@@ -10,7 +10,11 @@ public interface ClientAction extends Remote{
 	public String getUserName() throws RemoteException;
 
 	public void newTweets(HashMap<String, String> tweets) throws RemoteException;
+	
+	public void updateFollowings(int nb) throws RemoteException;
 
+	public void updateFollowers(int nb) throws RemoteException;
+	
 	public void refreshListTout() throws RemoteException;
 
 	public boolean isConnecte() throws RemoteException;

@@ -7,8 +7,6 @@ import java.rmi.RemoteException;
 
 import javax.swing.JFrame;
 
-import com.sun.glass.events.WindowEvent;
-
 import client.controller.ClientController;
 
 public class PersonalPageFrame extends PersonalPageView {
@@ -69,6 +67,18 @@ public class PersonalPageFrame extends PersonalPageView {
 	public void setUserInfo(String name) {
 		userInfoPanel.setUserInfo(name);
 		frame.setTitle(frame.getTitle() + " " + name);
+	}
+
+	@Override
+	public void setFollowings(String nbFollowings) {
+		userInfoPanel.setFollowings(nbFollowings);
+		
+	}
+
+	@Override
+	public void setFollowers(String nbFollowers) {
+		userInfoPanel.setFollowers(nbFollowers);
+		
 	}
 
 }

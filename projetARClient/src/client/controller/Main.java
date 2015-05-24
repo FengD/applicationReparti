@@ -22,7 +22,7 @@ public class Main {
 	private static ClientController controller;
 	
 	private static WebService webService = null;
-	private static String host = "192.168.43.219";
+	private static String host = "localhost";
 	
 	public static void init() throws MalformedURLException, RemoteException, NotBoundException{
 		controller = new ClientController();

@@ -7,7 +7,7 @@ import java.rmi.server.UnicastRemoteObject;
 
 public class Server {
 
-	private static String host="192.168.43.219";//"192.168.43.219";
+	private static String host="localhost";//"192.168.43.219";
 	
 	public static void main(String[] agrs) throws RemoteException {
 

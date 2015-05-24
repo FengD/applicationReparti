@@ -86,6 +86,16 @@ public class ClientController extends UnicastRemoteObject implements ClientActio
 	public boolean deconnect(String userName) throws RemoteException{
 		return webService.disconnect(userName);
 	}
+	
+	public void setFollowings(int nbFollowings) {
+		personalPage.setFollowings(""+nbFollowings);
+		
+	}
+
+	public void setFollowers(int nbFollowers) {
+		personalPage.setFollowers(""+nbFollowers);
+		
+	}
 
 	@Override
 	public String getPassword() throws RemoteException {
@@ -102,7 +112,6 @@ public class ClientController extends UnicastRemoteObject implements ClientActio
 	@Override
 	public void newTweets(HashMap<String, String> tweets) throws RemoteException {
 		personalPage.setNews(tweets.get("message"));
-		System.out.println(tweets.get("message"));	
 	}
 
 	@Override
@@ -134,6 +143,18 @@ public class ClientController extends UnicastRemoteObject implements ClientActio
 	@Override
 	public void newUser(String userName) throws RemoteException {
 		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateFollowings(int nb) throws RemoteException {
+		personalPage.setFollowings(""+nb);
+		
+	}
+
+	@Override
+	public void updateFollowers(int nb) throws RemoteException {
+		personalPage.setFollowers(""+nb);
 		
 	}
 

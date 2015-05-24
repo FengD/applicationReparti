@@ -21,5 +21,9 @@ public abstract class PersonalPageView {
 	public abstract void setNews(String news);
 	
 	public abstract void setUserInfo(String name);
+	
+	public abstract void setFollowings(String nbFollowings);
+	
+	public abstract void setFollowers(String nbFollowers);
 
 }
