@@ -13,14 +13,10 @@ public interface Service extends Remote{
 	
 	public int getNbFollower(String userName) throws RemoteException;
 	
-//	public boolean deleteFollowing(String topicName) throws RemoteException;
-	
 	public boolean writeTweet(String userName,String topic, String message) throws RemoteException;
 	
 	public List<String> getAllUser() throws RemoteException;
 	
-//	public boolean deleteTweet() throws RemoteException;
-//	public ArrayList<String> viewFollowings() throws RemoteException;
-//	public String searchTopic() throws RemoteException;
-//	public ArrayList<String> viewTopics() throws RemoteException;
+	public List<String> getAllFollowing(String userName) throws RemoteException;
+	
 }

@@ -14,13 +14,9 @@ public interface ClientAction extends Remote{
 	public void updateFollowings(int nb) throws RemoteException;
 
 	public void updateFollowers(int nb) throws RemoteException;
-	
-	public void refreshListTout() throws RemoteException;
-
-	public boolean isConnecte() throws RemoteException;
 
 	public void refreshTopics() throws RemoteException;
 	
-	public void newUser(String userName) throws RemoteException;
+	public void newTopic(String userName) throws RemoteException;
 
 }

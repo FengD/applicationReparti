@@ -80,16 +80,7 @@ public class ClientController extends UnicastRemoteObject implements
 			throws RemoteException {
 		return webService.register(userName, password);
 	}
-
-	public Service login(ClientAction clientAction) throws RemoteException {
-		personalPage.setUserInfo(clientAction.getUserName());
-		return webService.login(clientAction);
-	}
-
-	public boolean deconnect(String userName) throws RemoteException {
-		return webService.disconnect(userName);
-	}
-
+	
 	public void setFollowings(int nbFollowings) {
 		personalPage.setFollowings("" + nbFollowings);
 
@@ -103,16 +94,27 @@ public class ClientController extends UnicastRemoteObject implements
 	public void setUsersBox(Object[] usersName){
 		personalPage.setUsersBox(usersName);
 	}
+	
+	public void addFollowings(List<String> followings){
+		personalPage.addFollowings(followings);
+	}
+
+	public Service login(ClientAction clientAction) throws RemoteException {
+		personalPage.setUserInfo(clientAction.getUserName());
+		return webService.login(clientAction);
+	}
+
+	public boolean deconnect(String userName) throws RemoteException {
+		return webService.disconnect(userName);
+	}
 
 	@Override
 	public String getPassword() throws RemoteException {
-		// TODO Auto-generated method stub
 		return this.passWord;
 	}
 
 	@Override
 	public String getUserName() throws RemoteException {
-		// TODO Auto-generated method stub
 		return this.userName;
 	}
 
@@ -124,21 +126,8 @@ public class ClientController extends UnicastRemoteObject implements
 	}
 
 	@Override
-	public void refreshListTout() throws RemoteException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public boolean isConnecte() throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public void refreshTopics() throws RemoteException {
-		// TODO Auto-generated method stub
-
+		personalPage.addFollowings(service.getAllFollowing(userName));
 	}
 
 	public void setUserName(String userName) {
@@ -150,14 +139,14 @@ public class ClientController extends UnicastRemoteObject implements
 	}
 
 	@Override
-	public void newUser(String userName) throws RemoteException {
-		personalPage.addNewUser(userName);
+	public void newTopic(String topic) throws RemoteException {
+		System.out.println("new topic: "+topic);
+		personalPage.addNewUser(topic);
 	}
 
 	@Override
 	public void updateFollowings(int nb) throws RemoteException {
 		personalPage.setFollowings("" + nb);
-
 	}
 
 	@Override

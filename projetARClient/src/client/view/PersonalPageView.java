@@ -1,5 +1,7 @@
 package client.view;
 
+import java.util.List;
+
 import client.controller.ClientController;
 
 
@@ -29,5 +31,7 @@ public abstract class PersonalPageView {
 	public abstract void setUsersBox(Object[] usersName);
 	
 	public abstract void addNewUser(String newUser);
+	
+	public abstract void addFollowings(List<String> followings);
 
 }

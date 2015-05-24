@@ -68,8 +68,17 @@ public class Database {
 	}
 	
 	//topic add delete get
-	public void addTopic(Topic topic){
-		this.topics.put(topic.getTopicName(), topic);
+	/**
+	 * 
+	 * @param topic
+	 * @return if it is a new topic return true else false
+	 */
+	public boolean addTopic(Topic topic){
+		if (!this.topics.containsKey(topic.getTopicName())) {
+			this.topics.put(topic.getTopicName(), topic);
+			return true;
+		}	
+		return false;
 	}
 	
 	public void deleteTopic(String topic){
@@ -78,5 +87,10 @@ public class Database {
 	
 	public Topic getTopic(String topic){
 		return this.topics.get(topic);
+	}
+	
+	public List<String> getAllTopic(){
+		List<String> result = new ArrayList<>(topics.keySet());
+		return result;
 	}
 }

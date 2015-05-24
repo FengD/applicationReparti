@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowListener;
 import java.rmi.RemoteException;
+import java.util.List;
 
 import javax.swing.JFrame;
 
@@ -91,6 +92,9 @@ public class PersonalPageFrame extends PersonalPageView {
 		newsPanel.addNewUser(newUser);
 	}
 
-	
+	@Override
+	public void addFollowings(List<String> followings) {
+		userInfoPanel.addFollowings(followings);
+	}
 
 }

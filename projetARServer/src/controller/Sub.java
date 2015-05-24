@@ -81,20 +81,6 @@ public class Sub implements javax.jms.MessageListener, Serializable {
 			topicSubscriber = topicSession.createDurableSubscriber(topic,
 					subName);
 			topicSubscriber.setMessageListener(this);
-			// while (true){
-			// System.out.println("in while");
-			// Message m= topicSubscriber.receive(10000);
-			// if (m == null) {
-			// System.out.println("No more messages");
-			// break;
-			// }
-			// else {
-			// System.out.print("recept synch: ");
-			// onMessage(m);
-			// }
-			// }
-			// System.out.println("end while");
-			// topicConnection.close();
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}
@@ -120,7 +106,6 @@ public class Sub implements javax.jms.MessageListener, Serializable {
 				String owner = tweet.getOwnerName();
 				String topic = tweet.getTopic().getTopicName();
 				//receive message send by others or your message but topic is your name
-				System.err.println("owner:" + owner+"topic:"+topic+"subName"+subName);
 				if (!this.owner.equals(owner)
 						|| (this.owner.equals(owner) && this.owner.equals(topic))) {
 					hashMap.put("message", tweet.getMessage());

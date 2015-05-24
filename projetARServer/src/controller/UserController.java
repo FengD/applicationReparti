@@ -23,7 +23,7 @@ public class UserController {
 		clientActions = new HashMap<>();
 	}
 
-	public boolean createNewUser(String userName, String pwd) {
+	public boolean createNewUser(String userName, String pwd) throws RemoteException {
 		user = findUserByName(userName);
 		if (user != null) {
 			return false;
@@ -31,6 +31,13 @@ public class UserController {
 			user = new User(userName, pwd);
 			user.addFollowing(new Topic(user.getName()));
 			db.signUpUser(user);
+			//new user is a topic, update user interface
+			if (db.addTopic(user)) {
+				//update all users active
+				for (ClientAction ca : clientActions.values()) {
+					ca.newTopic(userName);
+				}				
+			}	
 			return true;
 		}
 	}
@@ -42,7 +49,8 @@ public class UserController {
 		if (user != null && !user.isLogin()) {
 			if (user.checkPwd(pwd)) {
 				user.setIsLogin(true);
-				setupSubs(clientAction);
+				setupSubs(clientAction);	
+				//persist clienAction
 				clientActions.put(userName, clientAction);
 				return true;
 			}
@@ -98,9 +106,10 @@ public class UserController {
 				if (clientAction != null) {
 					clientAction
 							.updateFollowings(getNbFollowing(user.getName()));
+					clientAction.refreshTopics();
 				}
 				addFollower(topic, user, clientAction);
-
+				
 			}
 			System.out.println("end add following");
 		} catch (RemoteException e) {
@@ -151,10 +160,34 @@ public class UserController {
 	public List<String> getAllUserName() {
 		return db.getAllUserName();
 	}
+	
+	public List<String> getAllTopic(){
+		return db.getAllTopic();
+	}
+	
+	public List<String> getAllFollowing(String userName){
+		user = findUserByName(userName);
+		List<Topic> followings = user.getAllFollowing();
+		List<String> result = new ArrayList<>();
+		for (Topic following : followings) {
+			result.add(following.getTopicName());
+		}
+		return result;
+	}
 
 	public void publish(User owner, String topic, String tweetMessage,
 			boolean firstTime) {
 		new Pub().setupPublisher(owner, topic, tweetMessage);
+		//add new topic
+		if(db.addTopic(new Topic(topic))){
+			for (ClientAction ca : clientActions.values()) {
+				try {
+					ca.newTopic(topic);
+				} catch (RemoteException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 		if (firstTime) {
 			handleTweetMessage(owner, tweetMessage);
 		}

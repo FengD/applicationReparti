@@ -8,12 +8,15 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
+import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.Border;
 
 import client.controller.ClientController;
@@ -22,11 +25,11 @@ public class UserInfoPanel extends JPanel {
 
 	private static UserInfoPanel single = null;
 
-	private JLabel userName, following, followers, photoLabel, stateLabel;
+	private JLabel userName, following, followers, photoLabel, stateLabel, followingTitle;
 	private JLabel followingN, followersN;
 	private JPanel userInfoP, userNameP, infoP, followingP, userPanelPhoto,
-			followersP, topicP, buttonsP;
-	private JLabel[] topics;
+			followersP, buttonsP,topicPView, followingTitleP;
+	private JScrollPane topicP;
 	private JButton deconnectButton;
 	
 	private ClientController controller;
@@ -42,9 +45,19 @@ public class UserInfoPanel extends JPanel {
 		userName.setFont(new Font("Georgia", Font.PLAIN, 20));
 		Image photo = new ImageIcon("resourse/photo.jpg").getImage();
 		photoLabel = new JLabel();
+		followingTitle = new JLabel("All Your Followings");
+		followingTitle.setFont(new Font("Georgia", Font.PLAIN, 16));
+		followingTitle.setForeground(Color.blue);
+		
+		followingTitleP = new JPanel();
+		followingTitleP.setBorder(BorderFactory.createLineBorder(Color.black));
 		photoLabel.setIcon(new ImageIcon(photo));
 		following = new JLabel("FOLLOWING");
 		followers = new JLabel("FOLLOWERS");
+		following.setForeground(Color.blue);
+		following.setFont(new Font("Georgia", Font.PLAIN, 16));
+		followers.setForeground(Color.blue);
+		followers.setFont(new Font("Georgia", Font.PLAIN, 16));
 		stateLabel = new JLabel("State: Connected");
 		followingN = new JLabel();
 		followersN = new JLabel();
@@ -55,13 +68,21 @@ public class UserInfoPanel extends JPanel {
 		infoP = new JPanel();
 		followingP = new JPanel();
 		followersP = new JPanel();
-		topicP = new JPanel();
+		
+		topicPView = new JPanel();
+		topicPView.setLayout(new BoxLayout(topicPView, BoxLayout.Y_AXIS));
+		topicP = new JScrollPane(topicPView);
+		
+		followingTitleP.setLayout(new BorderLayout());
+		followingTitleP.add(followingTitle, BorderLayout.NORTH);
+		followingTitleP.add(topicP);
+		
 		deconnectButton = new JButton("DECONNECT");
 		
 		this.setLayout(new BorderLayout());
 
 		this.add(userInfoP, BorderLayout.NORTH);
-		this.add(topicP);
+		this.add(followingTitleP);
 		this.add(buttonsP, BorderLayout.SOUTH);
 
 		userInfoP.add(userPanelPhoto);
@@ -104,21 +125,10 @@ public class UserInfoPanel extends JPanel {
 				} catch (RemoteException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-				}
-				
+				}			
 			}
 		});
 
-		topics = new JLabel[10];
-		for (int i = 0; i < 10; i++) {
-			topics[i] = new JLabel("topic" + i);
-		}
-
-		for (int i = 0; i < 10; i++) {
-			topicP.add(topics[i]);
-		}
-
-		topicP.setLayout(new GridLayout(0, 1));
 	}
 	
 	public void setUserInfo(String n){
@@ -133,6 +143,11 @@ public class UserInfoPanel extends JPanel {
 		followersN.setText(nbFollowers);
 	}
 	
-	
-
+	public void addFollowings(List<String> followings){
+		topicPView.removeAll();
+		for(String f: followings){
+			topicPView.add(new JLabel(f));
+			topicP.getViewport().add(topicPView);
+		}
+	}
 }

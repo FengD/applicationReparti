@@ -109,6 +109,7 @@ public class LoginFrame extends TweetsView {
 						getController().setFollowings(getController().getService().getNbFollowing(getController().getUserName()));
 						getController().setFollowers(getController().getService().getNbFollower(getController().getUserName()));
 						getController().setUsersBox(getController().getService().getAllUser().toArray());
+						getController().addFollowings(getController().getService().getAllFollowing(getController().getUserName()));
 						getController().closeLogin();
 						getController().displayPersonalPage();
 					} else {
